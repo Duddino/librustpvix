@@ -11,7 +11,7 @@ pub const COIN_TYPE: u32 = 1;
 ///
 /// [`ExtendedSpendingKey`]: crate::zip32::ExtendedSpendingKey
 /// [ZIP 32]: https://github.com/zcash/zips/blob/master/zip-0032.rst
-pub const HRP_SAPLING_EXTENDED_SPENDING_KEY: &str = "secret-extended-key-test";
+pub const HRP_SAPLING_EXTENDED_SPENDING_KEY: &str = "p-secret-extended-key-test";
 
 /// The HRP for a Bech32-encoded testnet [`ExtendedFullViewingKey`].
 ///
@@ -19,7 +19,7 @@ pub const HRP_SAPLING_EXTENDED_SPENDING_KEY: &str = "secret-extended-key-test";
 ///
 /// [`ExtendedFullViewingKey`]: crate::zip32::ExtendedFullViewingKey
 /// [ZIP 32]: https://github.com/zcash/zips/blob/master/zip-0032.rst
-pub const HRP_SAPLING_EXTENDED_FULL_VIEWING_KEY: &str = "zxviewtestsapling";
+pub const HRP_SAPLING_EXTENDED_FULL_VIEWING_KEY: &str = "pxviewtestsapling";
 
 /// The HRP for a Bech32-encoded testnet [`PaymentAddress`].
 ///
@@ -27,7 +27,7 @@ pub const HRP_SAPLING_EXTENDED_FULL_VIEWING_KEY: &str = "zxviewtestsapling";
 ///
 /// [`PaymentAddress`]: crate::sapling::PaymentAddress
 /// [Zcash Protocol Specification]: https://github.com/zcash/zips/blob/master/protocol/protocol.pdf
-pub const HRP_SAPLING_PAYMENT_ADDRESS: &str = "ztestsapling";
+pub const HRP_SAPLING_PAYMENT_ADDRESS: &str = "ptestsapling";
 
 /// The prefix for a Base58Check-encoded testnet [`TransparentAddress::PublicKey`].
 ///

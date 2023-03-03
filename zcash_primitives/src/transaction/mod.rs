@@ -567,7 +567,8 @@ impl Transaction {
     pub fn read<R: Read>(reader: R, consensus_branch_id: BranchId) -> io::Result<Self> {
         let mut reader = HashReader::new(reader);
 
-        let version = TxVersion::read(&mut reader)?;
+	let version = TxVersion::read(&mut reader)?;
+	let version = if let TxVersion::Sprout(v) = version { if v == 1 { TxVersion::Sprout(1) } else {TxVersion::Sapling} } else { TxVersion::Sapling };
         match version {
             TxVersion::Sprout(_) | TxVersion::Overwinter | TxVersion::Sapling => {
                 Self::read_v4(reader, version, consensus_branch_id)
@@ -585,10 +586,11 @@ impl Transaction {
         consensus_branch_id: BranchId,
     ) -> io::Result<Self> {
         let transparent_bundle = Self::read_transparent(&mut reader)?;
-
         let lock_time = reader.read_u32::<LittleEndian>()?;
+
         let expiry_height: BlockHeight = if version.has_overwinter() {
-            reader.read_u32::<LittleEndian>()?.into()
+            (reader.read_u8()? as u32).into()
+	    //0u32.into()
         } else {
             0u32.into()
         };
@@ -606,7 +608,7 @@ impl Transaction {
             (Amount::zero(), vec![], vec![])
         };
 
-        let sprout_bundle = if version.has_sprout() {
+        let sprout_bundle = if false {
             let joinsplits = Vector::read(&mut reader, |r| {
                 JsDescription::read(r, version.has_sapling())
             })?;
@@ -682,6 +684,7 @@ impl Transaction {
     fn read_amount<R: Read>(mut reader: R) -> io::Result<Amount> {
         let mut tmp = [0; 8];
         reader.read_exact(&mut tmp)?;
+	println!("{:?}", tmp);
         Amount::from_i64_le_bytes(tmp)
             .map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "valueBalance out of range"))
     }
