@@ -251,12 +251,12 @@ pub const TEST_NETWORK: TestNetwork = TestNetwork;
 impl Parameters for TestNetwork {
     fn activation_height(&self, nu: NetworkUpgrade) -> Option<BlockHeight> {
         match nu {
-            NetworkUpgrade::Overwinter => Some(BlockHeight(207_500)),
-            NetworkUpgrade::Sapling => Some(BlockHeight(280_000)),
-            NetworkUpgrade::Blossom => Some(BlockHeight(584_000)),
-            NetworkUpgrade::Heartwood => Some(BlockHeight(903_800)),
-            NetworkUpgrade::Canopy => Some(BlockHeight(1_028_500)),
-            NetworkUpgrade::Nu5 => Some(BlockHeight(1_842_420)),
+            NetworkUpgrade::Overwinter => None,
+            NetworkUpgrade::Sapling => Some(BlockHeight(0)),
+            NetworkUpgrade::Blossom => None,
+            NetworkUpgrade::Heartwood => None,
+            NetworkUpgrade::Canopy => None,
+            NetworkUpgrade::Nu5 => None,
             #[cfg(feature = "zfuture")]
             NetworkUpgrade::ZFuture => None,
         }

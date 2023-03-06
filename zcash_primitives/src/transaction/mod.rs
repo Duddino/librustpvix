@@ -48,7 +48,7 @@ use self::components::tze::{self, TzeIn, TzeOut};
 const OVERWINTER_VERSION_GROUP_ID: u32 = 0x03C48270;
 const OVERWINTER_TX_VERSION: u32 = 3;
 const SAPLING_VERSION_GROUP_ID: u32 = 0x892F2085;
-const SAPLING_TX_VERSION: u32 = 4;
+const SAPLING_TX_VERSION: u32 = 3;
 
 const V5_TX_VERSION: u32 = 5;
 const V5_VERSION_GROUP_ID: u32 = 0x26A7270A;
@@ -132,33 +132,18 @@ impl TxVersion {
         let overwintered = (header >> 31) == 1;
         let version = header & 0x7FFFFFFF;
 
-        if overwintered {
-            match (version, reader.read_u32::<LittleEndian>()?) {
-                (OVERWINTER_TX_VERSION, OVERWINTER_VERSION_GROUP_ID) => Ok(TxVersion::Overwinter),
-                (SAPLING_TX_VERSION, SAPLING_VERSION_GROUP_ID) => Ok(TxVersion::Sapling),
-                (V5_TX_VERSION, V5_VERSION_GROUP_ID) => Ok(TxVersion::Zip225),
-                #[cfg(feature = "zfuture")]
-                (ZFUTURE_TX_VERSION, ZFUTURE_VERSION_GROUP_ID) => Ok(TxVersion::ZFuture),
-                _ => Err(io::Error::new(
-                    io::ErrorKind::InvalidInput,
-                    "Unknown transaction format",
-                )),
-            }
-        } else if version >= 1 {
-            Ok(TxVersion::Sprout(version))
-        } else {
-            Err(io::Error::new(
-                io::ErrorKind::InvalidInput,
-                "Unknown transaction format",
-            ))
-        }
+        if version == 1 {
+	    Ok(TxVersion::Sprout(1))
+	} else {
+	    Ok(TxVersion::Sapling)
+	}
     }
 
     pub fn header(&self) -> u32 {
         // After Sprout, the overwintered bit is always set.
         let overwintered = match self {
             TxVersion::Sprout(_) => 0,
-            _ => 1 << 31,
+            _ => 0,
         };
 
         overwintered
@@ -185,6 +170,7 @@ impl TxVersion {
 
     pub fn write<W: Write>(&self, mut writer: W) -> io::Result<()> {
         writer.write_u32::<LittleEndian>(self.header())?;
+	return Ok(());
         match self {
             TxVersion::Sprout(_) => Ok(()),
             _ => writer.write_u32::<LittleEndian>(self.version_group_id()),
@@ -568,7 +554,6 @@ impl Transaction {
         let mut reader = HashReader::new(reader);
 
 	let version = TxVersion::read(&mut reader)?;
-	let version = if let TxVersion::Sprout(v) = version { if v == 1 { TxVersion::Sprout(1) } else {TxVersion::Sapling} } else { TxVersion::Sapling };
         match version {
             TxVersion::Sprout(_) | TxVersion::Overwinter | TxVersion::Sapling => {
                 Self::read_v4(reader, version, consensus_branch_id)
@@ -589,12 +574,12 @@ impl Transaction {
         let lock_time = reader.read_u32::<LittleEndian>()?;
 
         let expiry_height: BlockHeight = if version.has_overwinter() {
-            (reader.read_u8()? as u32).into()
+	    let hi = reader.read_u8()?;
+            (hi as u32).into()
 	    //0u32.into()
         } else {
             0u32.into()
         };
-
         let (value_balance, shielded_spends, shielded_outputs) = if version.has_sapling() {
             let vb = Self::read_amount(&mut reader)?;
             #[allow(clippy::redundant_closure)]
@@ -607,6 +592,7 @@ impl Transaction {
         } else {
             (Amount::zero(), vec![], vec![])
         };
+
 
         let sprout_bundle = if false {
             let joinsplits = Vector::read(&mut reader, |r| {
@@ -684,7 +670,6 @@ impl Transaction {
     fn read_amount<R: Read>(mut reader: R) -> io::Result<Amount> {
         let mut tmp = [0; 8];
         reader.read_exact(&mut tmp)?;
-	println!("{:?}", tmp);
         Amount::from_i64_le_bytes(tmp)
             .map_err(|_| io::Error::new(io::ErrorKind::InvalidData, "valueBalance out of range"))
     }
@@ -826,7 +811,8 @@ impl Transaction {
         self.write_transparent(&mut writer)?;
         writer.write_u32::<LittleEndian>(self.lock_time)?;
         if self.version.has_overwinter() {
-            writer.write_u32::<LittleEndian>(u32::from(self.expiry_height))?;
+	    writer.write_u8(1u8)?;
+            //writer.write_u32::<LittleEndian>(u32::from(self.expiry_height))?;
         }
 
         if self.version.has_sapling() {
@@ -858,7 +844,7 @@ impl Transaction {
             ));
         }
 
-        if self.version.has_sprout() {
+        if false {
             if let Some(bundle) = self.sprout_bundle.as_ref() {
                 Vector::write(&mut writer, &bundle.joinsplits, |w, e| e.write(w))?;
                 writer.write_all(&bundle.joinsplit_pubkey)?;

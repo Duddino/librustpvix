@@ -363,6 +363,7 @@ impl<P: consensus::Parameters> SaplingBuilder<P> {
             .map(|(i, o)| Some((i, o)))
             .collect();
 
+
         // Set up the transaction metadata that will be used to record how
         // inputs and outputs are shuffled.
         let mut tx_metadata = SaplingMetadata::empty();
@@ -370,11 +371,13 @@ impl<P: consensus::Parameters> SaplingBuilder<P> {
         tx_metadata.output_indices.resize(indexed_outputs.len(), 0);
 
         // Pad Sapling outputs
+	/*
         if !indexed_spends.is_empty() {
             while indexed_outputs.len() < MIN_SHIELDED_OUTPUTS {
                 indexed_outputs.push(None);
             }
-        }
+    }
+	*/
 
         // Randomize order of inputs and outputs
         indexed_spends.shuffle(&mut rng);
@@ -439,7 +442,7 @@ impl<P: consensus::Parameters> SaplingBuilder<P> {
         } else {
             vec![]
         };
-
+	
         // Create Sapling OutputDescriptions
         let shielded_outputs: Vec<OutputDescription<GrothProofBytes>> = indexed_outputs
             .into_iter()
