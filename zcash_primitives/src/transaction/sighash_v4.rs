@@ -14,13 +14,13 @@ use super::{
     Authorization, TransactionData,
 };
 
-const ZCASH_SIGHASH_PERSONALIZATION_PREFIX: &[u8; 12] = b"ZcashSigHash";
-const ZCASH_PREVOUTS_HASH_PERSONALIZATION: &[u8; 16] = b"ZcashPrevoutHash";
-const ZCASH_SEQUENCE_HASH_PERSONALIZATION: &[u8; 16] = b"ZcashSequencHash";
-const ZCASH_OUTPUTS_HASH_PERSONALIZATION: &[u8; 16] = b"ZcashOutputsHash";
-const ZCASH_JOINSPLITS_HASH_PERSONALIZATION: &[u8; 16] = b"ZcashJSplitsHash";
-const ZCASH_SHIELDED_SPENDS_HASH_PERSONALIZATION: &[u8; 16] = b"ZcashSSpendsHash";
-const ZCASH_SHIELDED_OUTPUTS_HASH_PERSONALIZATION: &[u8; 16] = b"ZcashSOutputHash";
+const ZCASH_SIGHASH_PERSONALIZATION_PREFIX: &[u8; 16] = b"PIVXSigHash\0\0\0\0\0";
+const ZCASH_PREVOUTS_HASH_PERSONALIZATION: &[u8; 16] = b"PIVXPrevoutHash\0";
+const ZCASH_SEQUENCE_HASH_PERSONALIZATION: &[u8; 16] = b"PIVXSequencHash\0";
+const ZCASH_OUTPUTS_HASH_PERSONALIZATION: &[u8; 16] = b"PIVXOutputsHash\0";
+const ZCASH_JOINSPLITS_HASH_PERSONALIZATION: &[u8; 16] = b"PIVXJSplitsHash\0";
+const ZCASH_SHIELDED_SPENDS_HASH_PERSONALIZATION: &[u8; 16] = b"PIVXSSpendsHash\0";
+const ZCASH_SHIELDED_OUTPUTS_HASH_PERSONALIZATION: &[u8; 16] = b"PIVXSOutputHash\0";
 
 macro_rules! update_u32 {
     ($h:expr, $value:expr, $tmp:expr) => {
@@ -142,21 +142,22 @@ pub fn v4_signature_hash<
     signable_input: &SignableInput<'_>,
 ) -> Blake2bHash {
     let hash_type = signable_input.hash_type();
+    println!("{:?}", hash_type);
+
+    
+    
     if tx.version.has_overwinter() {
-        let mut personal = [0; 16];
-        personal[..12].copy_from_slice(ZCASH_SIGHASH_PERSONALIZATION_PREFIX);
-        (&mut personal[12..])
-            .write_u32::<LittleEndian>(tx.consensus_branch_id.into())
-            .unwrap();
 
         let mut h = Blake2bParams::new()
             .hash_length(32)
-            .personal(&personal)
+            .personal(&*ZCASH_SIGHASH_PERSONALIZATION_PREFIX)
             .to_state();
         let mut tmp = [0; 8];
 
         update_u32!(h, tx.version.header(), tmp);
-        update_u32!(h, tx.version.version_group_id(), tmp);
+	println!("{}", tx.version.header());
+	//update_u32!(h, tx.version.version_group_id(), tmp);
+	//update_u32!(h, 0, tmp);
         update_hash!(
             h,
             hash_type & SIGHASH_ANYONECANPAY == 0,
@@ -200,7 +201,7 @@ pub fn v4_signature_hash<
             h.update(&[0; 32]);
         };
 
-        update_hash!(
+        /*update_hash!(
             h,
             !tx.sprout_bundle
                 .as_ref()
@@ -213,7 +214,7 @@ pub fn v4_signature_hash<
                     &bundle.joinsplit_pubkey,
                 )
             }
-        );
+        );*/
 
         if tx.version.has_sapling() {
             update_hash!(
@@ -230,12 +231,11 @@ pub fn v4_signature_hash<
                     .map_or(true, |b| b.shielded_outputs().is_empty()),
                 shielded_outputs_hash(tx.sapling_bundle.as_ref().unwrap().shielded_outputs())
             );
+	    h.update(&tx.sapling_value_balance().to_i64_le_bytes());
         }
         update_u32!(h, tx.lock_time, tmp);
-        update_u32!(h, tx.expiry_height.into(), tmp);
-        if tx.version.has_sapling() {
-            h.update(&tx.sapling_value_balance().to_i64_le_bytes());
-        }
+        //update_u32!(h, tx.expiry_height.into(), tmp);
+
         update_u32!(h, hash_type.into(), tmp);
 
         match signable_input {

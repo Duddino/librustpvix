@@ -371,14 +371,12 @@ impl<P: consensus::Parameters> SaplingBuilder<P> {
         tx_metadata.output_indices.resize(indexed_outputs.len(), 0);
 
         // Pad Sapling outputs
-	/*
         if !indexed_spends.is_empty() {
             while indexed_outputs.len() < MIN_SHIELDED_OUTPUTS {
                 indexed_outputs.push(None);
             }
-    }
-	*/
-
+	}
+	
         // Randomize order of inputs and outputs
         indexed_spends.shuffle(&mut rng);
         indexed_outputs.shuffle(&mut rng);
