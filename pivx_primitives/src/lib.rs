@@ -1,6 +1,6 @@
 //! *General Zcash primitives.*
 //!
-//! `zcash_primitives` is a library that provides the core structs and functions necessary
+//! `pivx_primitives` is a library that provides the core structs and functions necessary
 //! for working with Zcash.
 
 #![cfg_attr(docsrs, feature(doc_cfg))]

@@ -1,13 +1,13 @@
 //! Generated code for handling light client protobuf structs.
 
-use zcash_primitives::{
+use pivx_primitives::{
     block::{BlockHash, BlockHeader},
     consensus::BlockHeight,
     sapling::{note::ExtractedNoteCommitment, Nullifier},
     transaction::{components::sapling, TxId},
 };
 
-use zcash_note_encryption::{EphemeralKeyBytes, COMPACT_NOTE_SIZE};
+use pivx_note_encryption::{EphemeralKeyBytes, COMPACT_NOTE_SIZE};
 
 #[rustfmt::skip]
 #[allow(unknown_lints)]

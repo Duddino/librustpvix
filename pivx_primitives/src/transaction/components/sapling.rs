@@ -5,7 +5,7 @@ use memuse::DynamicUsage;
 
 use std::io::{self, Read, Write};
 
-use zcash_note_encryption::{
+use pivx_note_encryption::{
     EphemeralKeyBytes, ShieldedOutput, COMPACT_NOTE_SIZE, ENC_CIPHERTEXT_SIZE,
 };
 

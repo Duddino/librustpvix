@@ -6,7 +6,7 @@ use std::convert::TryFrom;
 use std::fmt::Debug;
 use std::io::{self, Read, Write};
 
-use zcash_encoding::{CompactSize, Vector};
+use pivx_encoding::{CompactSize, Vector};
 
 use super::amount::Amount;
 use crate::{extensions::transparent as tze, transaction::TxId};

@@ -1,7 +1,7 @@
 use bellman::{gadgets::multipack, groth16::Proof};
 use bls12_381::Bls12;
 use group::{ff::PrimeField, Curve, GroupEncoding};
-use zcash_primitives::{
+use pivx_primitives::{
     sapling::{
         note::ExtractedNoteCommitment,
         redjubjub::{PublicKey, Signature},

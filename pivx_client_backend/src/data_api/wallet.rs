@@ -1,7 +1,7 @@
 use std::convert::Infallible;
 use std::fmt::Debug;
 
-use zcash_primitives::{
+use pivx_primitives::{
     consensus::{self, NetworkUpgrade},
     memo::MemoBytes,
     merkle_tree::MerklePath,
@@ -34,7 +34,7 @@ use input_selection::{GreedyInputSelector, GreedyInputSelectorError, InputSelect
 #[cfg(feature = "transparent-inputs")]
 use {
     crate::wallet::WalletTransparentOutput,
-    zcash_primitives::{
+    pivx_primitives::{
         legacy::TransparentAddress, sapling::keys::OutgoingViewingKey,
         transaction::components::amount::NonNegativeAmount,
     },
@@ -121,22 +121,22 @@ where
 /// # #[cfg(feature = "test-dependencies")]
 /// # {
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     consensus::{self, Network},
 ///     constants::testnet::COIN_TYPE,
 ///     transaction::{TxId, components::Amount},
 ///     zip32::AccountId,
 /// };
 /// use zcash_proofs::prover::LocalTxProver;
-/// use zcash_client_backend::{
+/// use pivx_client_backend::{
 ///     keys::UnifiedSpendingKey,
 ///     data_api::{wallet::create_spend_to_address, error::Error, testing},
 ///     wallet::OvkPolicy,
 /// };
 ///
 /// # use std::convert::Infallible;
-/// # use zcash_primitives::transaction::components::amount::BalanceError;
-/// # use zcash_client_backend::{
+/// # use pivx_primitives::transaction::components::amount::BalanceError;
+/// # use pivx_client_backend::{
 /// #     data_api::wallet::input_selection::GreedyInputSelectorError,
 /// # };
 /// #
@@ -177,7 +177,7 @@ where
 /// # }
 /// # }
 /// ```
-/// [`sapling::TxProver`]: zcash_primitives::sapling::prover::TxProver
+/// [`sapling::TxProver`]: pivx_primitives::sapling::prover::TxProver
 #[allow(clippy::too_many_arguments)]
 #[allow(clippy::type_complexity)]
 #[deprecated(note = "Use `spend` instead.")]
@@ -278,7 +278,7 @@ where
 ///   received note must have in the blockchain in order to be considered for being
 ///   spent. A value of 10 confirmations is recommended.
 ///
-/// [`sapling::TxProver`]: zcash_primitives::sapling::prover::TxProver
+/// [`sapling::TxProver`]: pivx_primitives::sapling::prover::TxProver
 #[allow(clippy::too_many_arguments)]
 #[allow(clippy::type_complexity)]
 pub fn spend<DbT, ParamsT, InputsT>(
@@ -636,7 +636,7 @@ where
 ///   received UTXO must have in the blockchain in order to be considered for being
 ///   spent.
 ///
-/// [`sapling::TxProver`]: zcash_primitives::sapling::prover::TxProver
+/// [`sapling::TxProver`]: pivx_primitives::sapling::prover::TxProver
 #[cfg(feature = "transparent-inputs")]
 #[allow(clippy::too_many_arguments)]
 #[allow(clippy::type_complexity)]

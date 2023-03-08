@@ -4,15 +4,15 @@
 //! their functionality is available via the [`WalletRead`] and
 //! [`WalletWrite`] traits.
 //!
-//! [`WalletRead`]: zcash_client_backend::data_api::WalletRead
-//! [`WalletWrite`]: zcash_client_backend::data_api::WalletWrite
+//! [`WalletRead`]: pivx_client_backend::data_api::WalletRead
+//! [`WalletWrite`]: pivx_client_backend::data_api::WalletWrite
 
 use group::ff::PrimeField;
 use rusqlite::{named_params, OptionalExtension, ToSql};
 use std::collections::HashMap;
 use std::convert::TryFrom;
 
-use zcash_primitives::{
+use pivx_primitives::{
     block::BlockHash,
     consensus::{self, BlockHeight, BranchId, NetworkUpgrade, Parameters},
     memo::{Memo, MemoBytes},
@@ -25,7 +25,7 @@ use zcash_primitives::{
     },
 };
 
-use zcash_client_backend::{
+use pivx_client_backend::{
     address::{RecipientAddress, UnifiedAddress},
     data_api::{PoolType, Recipient, SentTransactionOutput},
     keys::UnifiedFullViewingKey,
@@ -43,10 +43,10 @@ use {
     crate::UtxoId,
     rusqlite::{params, Connection},
     std::collections::BTreeSet,
-    zcash_client_backend::{
+    pivx_client_backend::{
         address::AddressMetadata, encoding::AddressCodec, wallet::WalletTransparentOutput,
     },
-    zcash_primitives::{
+    pivx_primitives::{
         legacy::{keys::IncomingViewingKey, Script, TransparentAddress},
         transaction::components::{OutPoint, TxOut},
     },
@@ -134,7 +134,7 @@ impl ShieldedOutput for DecryptedOutput {
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     consensus::{self, Network},
 ///     zip32::AccountId,
 /// };
@@ -148,7 +148,7 @@ impl ShieldedOutput for DecryptedOutput {
 /// let addr = get_address(&db, AccountId::from(0));
 /// ```
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::get_address instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::get_address instead."
 )]
 pub fn get_address<P: consensus::Parameters>(
     wdb: &WalletDb<P>,
@@ -393,9 +393,9 @@ pub(crate) fn get_account_for_ufvk<P: consensus::Parameters>(
 /// Checks whether the specified [`ExtendedFullViewingKey`] is valid and corresponds to the
 /// specified account.
 ///
-/// [`ExtendedFullViewingKey`]: zcash_primitives::zip32::ExtendedFullViewingKey
+/// [`ExtendedFullViewingKey`]: pivx_primitives::zip32::ExtendedFullViewingKey
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::is_valid_account_extfvk instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::is_valid_account_extfvk instead."
 )]
 pub fn is_valid_account_extfvk<P: consensus::Parameters>(
     wdb: &WalletDb<P>,
@@ -436,7 +436,7 @@ pub fn is_valid_account_extfvk<P: consensus::Parameters>(
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     consensus::Network,
 ///     zip32::AccountId,
 /// };
@@ -450,7 +450,7 @@ pub fn is_valid_account_extfvk<P: consensus::Parameters>(
 /// let addr = get_balance(&db, AccountId::from(0));
 /// ```
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::get_balance_at instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::get_balance_at instead."
 )]
 pub fn get_balance<P>(wdb: &WalletDb<P>, account: AccountId) -> Result<Amount, SqliteClientError> {
     let balance = wdb.conn.query_row(
@@ -477,7 +477,7 @@ pub fn get_balance<P>(wdb: &WalletDb<P>, account: AccountId) -> Result<Amount, S
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     consensus::{BlockHeight, Network},
 ///     zip32::AccountId,
 /// };
@@ -491,7 +491,7 @@ pub fn get_balance<P>(wdb: &WalletDb<P>, account: AccountId) -> Result<Amount, S
 /// let addr = get_balance_at(&db, AccountId::from(0), BlockHeight::from_u32(0));
 /// ```
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::get_balance_at instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::get_balance_at instead."
 )]
 pub fn get_balance_at<P>(
     wdb: &WalletDb<P>,
@@ -523,7 +523,7 @@ pub fn get_balance_at<P>(
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::consensus::Network;
+/// use pivx_primitives::consensus::Network;
 /// use zcash_client_sqlite::{
 ///     NoteId,
 ///     WalletDb,
@@ -535,7 +535,7 @@ pub fn get_balance_at<P>(
 /// let memo = get_received_memo(&db, 27);
 /// ```
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::get_memo instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::get_memo instead."
 )]
 pub fn get_received_memo<P>(wdb: &WalletDb<P>, id_note: i64) -> Result<Memo, SqliteClientError> {
     let memo_bytes: Vec<_> = wdb.conn.query_row(
@@ -581,7 +581,7 @@ pub(crate) fn get_transaction<P: Parameters>(
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::consensus::Network;
+/// use pivx_primitives::consensus::Network;
 /// use zcash_client_sqlite::{
 ///     NoteId,
 ///     WalletDb,
@@ -593,7 +593,7 @@ pub(crate) fn get_transaction<P: Parameters>(
 /// let memo = get_sent_memo(&db, 12);
 /// ```
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::get_memo instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::get_memo instead."
 )]
 pub fn get_sent_memo<P>(wdb: &WalletDb<P>, id_note: i64) -> Result<Memo, SqliteClientError> {
     let memo_bytes: Vec<_> = wdb.conn.query_row(
@@ -614,7 +614,7 @@ pub fn get_sent_memo<P>(wdb: &WalletDb<P>, id_note: i64) -> Result<Memo, SqliteC
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::consensus::Network;
+/// use pivx_primitives::consensus::Network;
 /// use zcash_client_sqlite::{
 ///     WalletDb,
 ///     wallet::block_height_extrema,
@@ -625,7 +625,7 @@ pub fn get_sent_memo<P>(wdb: &WalletDb<P>, id_note: i64) -> Result<Memo, SqliteC
 /// let bounds = block_height_extrema(&db);
 /// ```
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::block_height_extrema instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::block_height_extrema instead."
 )]
 pub fn block_height_extrema<P>(
     wdb: &WalletDb<P>,
@@ -651,8 +651,8 @@ pub fn block_height_extrema<P>(
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::consensus::Network;
-/// use zcash_primitives::transaction::TxId;
+/// use pivx_primitives::consensus::Network;
+/// use pivx_primitives::transaction::TxId;
 /// use zcash_client_sqlite::{
 ///     WalletDb,
 ///     wallet::get_tx_height,
@@ -663,7 +663,7 @@ pub fn block_height_extrema<P>(
 /// let height = get_tx_height(&db, TxId::from_bytes([0u8; 32]));
 /// ```
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::get_tx_height instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::get_tx_height instead."
 )]
 pub fn get_tx_height<P>(
     wdb: &WalletDb<P>,
@@ -685,7 +685,7 @@ pub fn get_tx_height<P>(
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::consensus::{H0, Network};
+/// use pivx_primitives::consensus::{H0, Network};
 /// use zcash_client_sqlite::{
 ///     WalletDb,
 ///     wallet::get_block_hash,
@@ -696,7 +696,7 @@ pub fn get_tx_height<P>(
 /// let hash = get_block_hash(&db, H0);
 /// ```
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::get_block_hash instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::get_block_hash instead."
 )]
 pub fn get_block_hash<P>(
     wdb: &WalletDb<P>,
@@ -820,7 +820,7 @@ pub(crate) fn rewind_to_height<P: consensus::Parameters>(
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::consensus::{Network, H0};
+/// use pivx_primitives::consensus::{Network, H0};
 /// use zcash_client_sqlite::{
 ///     WalletDb,
 ///     wallet::get_commitment_tree,
@@ -831,7 +831,7 @@ pub(crate) fn rewind_to_height<P: consensus::Parameters>(
 /// let tree = get_commitment_tree(&db, H0);
 /// ```
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::get_commitment_tree instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::get_commitment_tree instead."
 )]
 pub fn get_commitment_tree<P>(
     wdb: &WalletDb<P>,
@@ -863,7 +863,7 @@ pub fn get_commitment_tree<P>(
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::consensus::{Network, H0};
+/// use pivx_primitives::consensus::{Network, H0};
 /// use zcash_client_sqlite::{
 ///     WalletDb,
 ///     wallet::get_witnesses,
@@ -874,7 +874,7 @@ pub fn get_commitment_tree<P>(
 /// let witnesses = get_witnesses(&db, H0);
 /// ```
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::get_witnesses instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::get_witnesses instead."
 )]
 pub fn get_witnesses<P>(
     wdb: &WalletDb<P>,
@@ -900,7 +900,7 @@ pub fn get_witnesses<P>(
 /// that have not yet been confirmed as a consequence of the spending
 /// transaction being included in a block.
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletRead::get_nullifiers instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletRead::get_nullifiers instead."
 )]
 pub fn get_nullifiers<P>(
     wdb: &WalletDb<P>,
@@ -1045,7 +1045,7 @@ pub(crate) fn get_transparent_balances<P: consensus::Parameters>(
 
 /// Inserts information about a scanned block into the database.
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletWrite::advance_by_block instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletWrite::advance_by_block instead."
 )]
 pub fn insert_block<'a, P>(
     stmts: &mut DataConnStmtCache<'a, P>,
@@ -1060,7 +1060,7 @@ pub fn insert_block<'a, P>(
 /// Inserts information about a mined transaction that was observed to
 /// contain a note related to this wallet into the database.
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletWrite::advance_by_block instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletWrite::advance_by_block instead."
 )]
 pub fn put_tx_meta<'a, P, N>(
     stmts: &mut DataConnStmtCache<'a, P>,
@@ -1078,7 +1078,7 @@ pub fn put_tx_meta<'a, P, N>(
 
 /// Inserts full transaction data into the database.
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletWrite::store_decrypted_tx instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletWrite::store_decrypted_tx instead."
 )]
 pub fn put_tx_data<'a, P>(
     stmts: &mut DataConnStmtCache<'a, P>,
@@ -1106,7 +1106,7 @@ pub fn put_tx_data<'a, P>(
 /// Marking a note spent in this fashion does NOT imply that the
 /// spending transaction has been mined.
 #[deprecated(
-    note = "This function will be removed in a future release. Use zcash_client_backend::data_api::WalletWrite::store_sent_tx instead."
+    note = "This function will be removed in a future release. Use pivx_client_backend::data_api::WalletWrite::store_sent_tx instead."
 )]
 pub fn mark_sapling_note_spent<'a, P>(
     stmts: &mut DataConnStmtCache<'a, P>,
@@ -1177,7 +1177,7 @@ pub(crate) fn put_received_transparent_utxo<'a, P: consensus::Parameters>(
 /// - A transaction will not contain more than 2^63 shielded outputs.
 /// - A note value will never exceed 2^63 zatoshis.
 #[deprecated(
-    note = "This method will be removed in a future release. Use zcash_client_backend::data_api::WalletWrite::store_decrypted_tx instead."
+    note = "This method will be removed in a future release. Use pivx_client_backend::data_api::WalletWrite::store_decrypted_tx instead."
 )]
 #[allow(deprecated)]
 pub fn put_received_note<'a, P, T: ShieldedOutput>(
@@ -1227,7 +1227,7 @@ pub fn put_received_note<'a, P, T: ShieldedOutput>(
 /// Records the incremental witness for the specified note,
 /// as of the given block height.
 #[deprecated(
-    note = "This method will be removed in a future release. Use zcash_client_backend::data_api::WalletWrite::store_decrypted_tx instead."
+    note = "This method will be removed in a future release. Use pivx_client_backend::data_api::WalletWrite::store_decrypted_tx instead."
 )]
 pub fn insert_witness<'a, P>(
     stmts: &mut DataConnStmtCache<'a, P>,
@@ -1240,7 +1240,7 @@ pub fn insert_witness<'a, P>(
 
 /// Removes old incremental witnesses up to the given block height.
 #[deprecated(
-    note = "This method will be removed in a future update. Use zcash_client_backend::data_api::WalletWrite::advance_by_block instead."
+    note = "This method will be removed in a future update. Use pivx_client_backend::data_api::WalletWrite::advance_by_block instead."
 )]
 pub fn prune_witnesses<P>(
     stmts: &mut DataConnStmtCache<'_, P>,
@@ -1252,7 +1252,7 @@ pub fn prune_witnesses<P>(
 /// Marks notes that have not been mined in transactions
 /// as expired, up to the given block height.
 #[deprecated(
-    note = "This method will be removed in a future update. Use zcash_client_backend::data_api::WalletWrite::advance_by_block instead."
+    note = "This method will be removed in a future update. Use pivx_client_backend::data_api::WalletWrite::advance_by_block instead."
 )]
 pub fn update_expired_notes<P>(
     stmts: &mut DataConnStmtCache<'_, P>,
@@ -1313,9 +1313,9 @@ mod tests {
     use secrecy::Secret;
     use tempfile::NamedTempFile;
 
-    use zcash_primitives::transaction::components::Amount;
+    use pivx_primitives::transaction::components::Amount;
 
-    use zcash_client_backend::data_api::WalletRead;
+    use pivx_client_backend::data_api::WalletRead;
 
     use crate::{tests, wallet::init::init_wallet_db, AccountId, WalletDb};
 
@@ -1323,10 +1323,10 @@ mod tests {
 
     #[cfg(feature = "transparent-inputs")]
     use {
-        zcash_client_backend::{
+        pivx_client_backend::{
             data_api::WalletWrite, encoding::AddressCodec, wallet::WalletTransparentOutput,
         },
-        zcash_primitives::{
+        pivx_primitives::{
             consensus::BlockHeight,
             transaction::components::{OutPoint, TxOut},
         },

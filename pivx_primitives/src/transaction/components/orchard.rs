@@ -11,7 +11,7 @@ use orchard::{
     value::ValueCommitment,
     Action, Anchor,
 };
-use zcash_encoding::{Array, CompactSize, Vector};
+use pivx_encoding::{Array, CompactSize, Vector};
 
 use super::Amount;
 use crate::transaction::Transaction;

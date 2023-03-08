@@ -5,7 +5,7 @@ use std::rc::Rc;
 
 use group::ff::PrimeField;
 
-use zcash_primitives::{
+use pivx_primitives::{
     consensus::BlockHeight,
     merkle_tree::IncrementalWitness,
     sapling::{Diversifier, Rseed},
@@ -13,7 +13,7 @@ use zcash_primitives::{
     zip32::AccountId,
 };
 
-use zcash_client_backend::wallet::SpendableNote;
+use pivx_client_backend::wallet::SpendableNote;
 
 use crate::{error::SqliteClientError, NoteId, WalletDb};
 
@@ -63,7 +63,7 @@ fn to_spendable_note(row: &Row) -> Result<SpendableNote<NoteId>, SqliteClientErr
 }
 
 #[deprecated(
-    note = "This method will be removed in a future update. Use zcash_client_backend::data_api::WalletRead::get_spendable_sapling_notes instead."
+    note = "This method will be removed in a future update. Use pivx_client_backend::data_api::WalletRead::get_spendable_sapling_notes instead."
 )]
 pub fn get_spendable_sapling_notes<P>(
     wdb: &WalletDb<P>,
@@ -105,7 +105,7 @@ pub fn get_spendable_sapling_notes<P>(
 }
 
 #[deprecated(
-    note = "This method will be removed in a future update. Use zcash_client_backend::data_api::WalletRead::select_spendable_sapling_notes instead."
+    note = "This method will be removed in a future update. Use pivx_client_backend::data_api::WalletRead::select_spendable_sapling_notes instead."
 )]
 pub fn select_spendable_sapling_notes<P>(
     wdb: &WalletDb<P>,
@@ -188,7 +188,7 @@ mod tests {
 
     use zcash_proofs::prover::LocalTxProver;
 
-    use zcash_primitives::{
+    use pivx_primitives::{
         block::BlockHash,
         consensus::{BlockHeight, BranchId},
         legacy::TransparentAddress,
@@ -197,7 +197,7 @@ mod tests {
         zip32::{sapling::ExtendedSpendingKey, Scope},
     };
 
-    use zcash_client_backend::{
+    use pivx_client_backend::{
         address::RecipientAddress,
         data_api::{
             self,
@@ -227,11 +227,11 @@ mod tests {
 
     #[cfg(feature = "transparent-inputs")]
     use {
-        zcash_client_backend::{
+        pivx_client_backend::{
             data_api::wallet::shield_transparent_funds, fees::fixed,
             wallet::WalletTransparentOutput,
         },
-        zcash_primitives::{
+        pivx_primitives::{
             memo::MemoBytes,
             transaction::{
                 components::{amount::NonNegativeAmount, OutPoint, TxOut},

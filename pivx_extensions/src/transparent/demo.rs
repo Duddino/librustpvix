@@ -23,7 +23,7 @@ use std::ops::{Deref, DerefMut};
 
 use blake2b_simd::Params;
 
-use zcash_primitives::{
+use pivx_primitives::{
     extensions::transparent::{Extension, ExtensionTxBuilder, FromPayload, ToPayload},
     transaction::components::{
         amount::Amount,
@@ -232,7 +232,7 @@ pub trait Context {
 /// Marker type for the demo extension.
 ///
 /// A value of this type will be used as the receiver for
-/// `zcash_primitives::extensions::transparent::Extension` method invocations.
+/// `pivx_primitives::extensions::transparent::Extension` method invocations.
 pub struct Program;
 
 impl<C: Context> Extension<C> for Program {
@@ -326,7 +326,7 @@ fn hash_1(preimage_1: &[u8; 32], hash_2: &[u8; 32]) -> [u8; 32] {
     hash
 }
 
-/// Wrapper for [`zcash_primitives::transaction::builder::Builder`] that simplifies
+/// Wrapper for [`pivx_primitives::transaction::builder::Builder`] that simplifies
 /// constructing transactions that utilize the features of the demo extension.
 pub struct DemoBuilder<B> {
     /// The wrapped transaction builder.
@@ -370,7 +370,7 @@ pub enum DemoBuildError<E> {
     },
 }
 
-/// Convenience methods for use with [`zcash_primitives::transaction::builder::Builder`]
+/// Convenience methods for use with [`pivx_primitives::transaction::builder::Builder`]
 /// for constructing transactions that utilize the features of the demo extension.
 impl<'a, B: ExtensionTxBuilder<'a>> DemoBuilder<B> {
     /// Add a channel-opening precondition to the outputs of the transaction under
@@ -482,7 +482,7 @@ mod tests {
 
     use zcash_proofs::prover::LocalTxProver;
 
-    use zcash_primitives::{
+    use pivx_primitives::{
         consensus::{BlockHeight, BranchId, NetworkUpgrade, Parameters},
         constants,
         extensions::transparent::{self as tze, Extension, FromPayload, ToPayload},
@@ -519,7 +519,7 @@ mod tests {
             }
         }
 
-        fn address_network(&self) -> Option<zcash_address::Network> {
+        fn address_network(&self) -> Option<pivx_address::Network> {
             None
         }
 

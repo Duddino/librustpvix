@@ -3,9 +3,9 @@
 use prost::Message;
 use rusqlite::params;
 
-use zcash_primitives::consensus::BlockHeight;
+use pivx_primitives::consensus::BlockHeight;
 
-use zcash_client_backend::{data_api::chain::error::Error, proto::compact_formats::CompactBlock};
+use pivx_client_backend::{data_api::chain::error::Error, proto::compact_formats::CompactBlock};
 
 use crate::{error::SqliteClientError, BlockDb};
 
@@ -268,15 +268,15 @@ mod tests {
     use secrecy::Secret;
     use tempfile::NamedTempFile;
 
-    use zcash_primitives::{
+    use pivx_primitives::{
         block::BlockHash, transaction::components::Amount, zip32::ExtendedSpendingKey,
     };
 
-    use zcash_client_backend::data_api::chain::{
+    use pivx_client_backend::data_api::chain::{
         error::{Cause, Error},
         scan_cached_blocks, validate_chain,
     };
-    use zcash_client_backend::data_api::WalletRead;
+    use pivx_client_backend::data_api::WalletRead;
 
     use crate::{
         chain::init::init_cache_database,

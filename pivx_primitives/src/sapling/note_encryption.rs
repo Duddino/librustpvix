@@ -8,7 +8,7 @@ use ff::PrimeField;
 use memuse::DynamicUsage;
 use rand_core::RngCore;
 
-use zcash_note_encryption::{
+use pivx_note_encryption::{
     try_compact_note_decryption, try_note_decryption, try_output_recovery_with_ock,
     try_output_recovery_with_ovk, BatchDomain, Domain, EphemeralKeyBytes, NoteEncryption,
     NotePlaintextBytes, OutPlaintextBytes, OutgoingCipherKey, ShieldedOutput, COMPACT_NOTE_SIZE,
@@ -341,7 +341,7 @@ impl<P: consensus::Parameters> BatchDomain for SaplingDomain<P> {
 /// ```
 /// use ff::Field;
 /// use rand_core::OsRng;
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     keys::{OutgoingViewingKey, prf_expand},
 ///     consensus::{TEST_NETWORK, TestNetwork, NetworkUpgrade, Parameters},
 ///     memo::MemoBytes,
@@ -498,7 +498,7 @@ mod tests {
     use rand_core::OsRng;
     use rand_core::{CryptoRng, RngCore};
 
-    use zcash_note_encryption::{
+    use pivx_note_encryption::{
         batch, EphemeralKeyBytes, NoteEncryption, OutgoingCipherKey, ENC_CIPHERTEXT_SIZE,
         NOTE_PLAINTEXT_SIZE, OUT_CIPHERTEXT_SIZE, OUT_PLAINTEXT_SIZE,
     };

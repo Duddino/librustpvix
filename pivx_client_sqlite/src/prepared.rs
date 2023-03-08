@@ -8,7 +8,7 @@
 //! - Add a crate-private helper method to `DataConnStmtCache` for running the statement.
 
 use rusqlite::{named_params, params, Statement, ToSql};
-use zcash_primitives::{
+use pivx_primitives::{
     block::BlockHash,
     consensus::{self, BlockHeight},
     memo::MemoBytes,
@@ -18,7 +18,7 @@ use zcash_primitives::{
     zip32::{AccountId, DiversifierIndex},
 };
 
-use zcash_client_backend::{
+use pivx_client_backend::{
     address::UnifiedAddress,
     data_api::{PoolType, Recipient},
     encoding::AddressCodec,
@@ -29,8 +29,8 @@ use crate::{error::SqliteClientError, wallet::pool_code, NoteId, WalletDb};
 #[cfg(feature = "transparent-inputs")]
 use {
     crate::UtxoId, rusqlite::OptionalExtension,
-    zcash_client_backend::wallet::WalletTransparentOutput,
-    zcash_primitives::transaction::components::transparent::OutPoint,
+    pivx_client_backend::wallet::WalletTransparentOutput,
+    pivx_primitives::transaction::components::transparent::OutPoint,
 };
 
 pub(crate) struct InsertAddress<'a> {
@@ -86,7 +86,7 @@ impl<'a> InsertAddress<'a> {
 /// required for the implementation of [`WalletWrite`] against the backing
 /// store.
 ///
-/// [`WalletWrite`]: zcash_client_backend::data_api::WalletWrite
+/// [`WalletWrite`]: pivx_client_backend::data_api::WalletWrite
 pub struct DataConnStmtCache<'a, P> {
     pub(crate) wallet_db: &'a WalletDb<P>,
     stmt_insert_block: Statement<'a>,

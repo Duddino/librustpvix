@@ -5,11 +5,11 @@
 //! and trial decryption logic, and enforce protocol-agnostic verification requirements.
 //!
 //! Protocol-specific logic is handled via the [`Domain`] trait. Implementations of this
-//! trait are provided in the [`zcash_primitives`] (for Sapling) and [`orchard`] crates;
+//! trait are provided in the [`pivx_primitives`] (for Sapling) and [`orchard`] crates;
 //! users with their own existing types can similarly implement the trait themselves.
 //!
 //! [in-band secret distribution scheme]: https://zips.z.cash/protocol/protocol.pdf#saplingandorchardinband
-//! [`zcash_primitives`]: https://crates.io/crates/zcash_primitives
+//! [`pivx_primitives`]: https://crates.io/crates/pivx_primitives
 //! [`orchard`]: https://crates.io/crates/orchard
 
 #![no_std]
@@ -176,10 +176,10 @@ pub trait Domain {
     ///
     /// The `recipient` argument is present as a secondary way to obtain the diversifier;
     /// this is due to a historical quirk of how the Sapling `Note` struct was implemented
-    /// in the `zcash_primitives` crate. `recipient` will be removed from this method in a
-    /// future crate release, once [`zcash_primitives` has been refactored].
+    /// in the `pivx_primitives` crate. `recipient` will be removed from this method in a
+    /// future crate release, once [`pivx_primitives` has been refactored].
     ///
-    /// [`zcash_primitives` has been refactored]: https://github.com/zcash/librustzcash/issues/454
+    /// [`pivx_primitives` has been refactored]: https://github.com/zcash/librustzcash/issues/454
     fn note_plaintext_bytes(
         note: &Self::Note,
         recipient: &Self::Recipient,

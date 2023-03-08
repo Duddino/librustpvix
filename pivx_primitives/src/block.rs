@@ -6,7 +6,7 @@ use sha2::{Digest, Sha256};
 use std::fmt;
 use std::io::{self, Read, Write};
 use std::ops::Deref;
-use zcash_encoding::Vector;
+use pivx_encoding::Vector;
 
 pub use equihash;
 

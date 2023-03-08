@@ -63,7 +63,7 @@ impl<E: Error + 'static> Error for ConversionError<E> {
 /// # Examples
 ///
 /// ```
-/// use zcash_address::{ConversionError, Network, TryFromRawAddress, UnsupportedAddress, ZcashAddress};
+/// use pivx_address::{ConversionError, Network, TryFromRawAddress, UnsupportedAddress, ZcashAddress};
 ///
 /// #[derive(Debug, PartialEq)]
 /// struct MySapling([u8; 43]);
@@ -148,7 +148,7 @@ pub trait TryFromRawAddress: Sized {
 /// # Examples
 ///
 /// ```
-/// use zcash_address::{ConversionError, Network, TryFromAddress, UnsupportedAddress, ZcashAddress};
+/// use pivx_address::{ConversionError, Network, TryFromAddress, UnsupportedAddress, ZcashAddress};
 ///
 /// #[derive(Debug)]
 /// struct MySapling([u8; 43]);
@@ -283,7 +283,7 @@ impl<T: TryFromRawAddress> TryFromAddress for (Network, T) {
 /// # Examples
 ///
 /// ```
-/// use zcash_address::{ToAddress, Network, ZcashAddress};
+/// use pivx_address::{ToAddress, Network, ZcashAddress};
 ///
 /// #[derive(Debug)]
 /// struct MySapling([u8; 43]);

@@ -4,7 +4,7 @@ use super::ecc::{EdwardsPoint, MontgomeryPoint};
 use bellman::gadgets::boolean::Boolean;
 use bellman::gadgets::lookup::*;
 use bellman::{ConstraintSystem, SynthesisError};
-pub use zcash_primitives::sapling::pedersen_hash::Personalization;
+pub use pivx_primitives::sapling::pedersen_hash::Personalization;
 
 use crate::constants::PEDERSEN_CIRCUIT_GENERATORS;
 
@@ -110,7 +110,7 @@ mod test {
     use group::{ff::PrimeField, Curve};
     use rand_core::{RngCore, SeedableRng};
     use rand_xorshift::XorShiftRng;
-    use zcash_primitives::sapling::pedersen_hash;
+    use pivx_primitives::sapling::pedersen_hash;
 
     /// Predict the number of constraints of a Pedersen hash
     fn ph_num_constraints(input_bits: usize) -> usize {

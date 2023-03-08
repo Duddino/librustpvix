@@ -1,8 +1,8 @@
 //! Structs representing transaction data scanned from the block chain by a wallet or
 //! light client.
 
-use zcash_note_encryption::EphemeralKeyBytes;
-use zcash_primitives::{
+use pivx_note_encryption::EphemeralKeyBytes;
+use pivx_primitives::{
     consensus::BlockHeight,
     keys::OutgoingViewingKey,
     legacy::TransparentAddress,
@@ -23,7 +23,7 @@ use zcash_primitives::{
 
 /// A subset of a [`Transaction`] relevant to wallets and light clients.
 ///
-/// [`Transaction`]: zcash_primitives::transaction::Transaction
+/// [`Transaction`]: pivx_primitives::transaction::Transaction
 pub struct WalletTx<N> {
     pub txid: TxId,
     pub index: usize,
@@ -89,7 +89,7 @@ impl transparent::fees::InputView for WalletTransparentOutput {
 
 /// A subset of a [`SpendDescription`] relevant to wallets and light clients.
 ///
-/// [`SpendDescription`]: zcash_primitives::transaction::components::SpendDescription
+/// [`SpendDescription`]: pivx_primitives::transaction::components::SpendDescription
 pub struct WalletShieldedSpend {
     pub index: usize,
     pub nf: Nullifier,
@@ -98,7 +98,7 @@ pub struct WalletShieldedSpend {
 
 /// A subset of an [`OutputDescription`] relevant to wallets and light clients.
 ///
-/// [`OutputDescription`]: zcash_primitives::transaction::components::OutputDescription
+/// [`OutputDescription`]: pivx_primitives::transaction::components::OutputDescription
 pub struct WalletShieldedOutput<N> {
     pub index: usize,
     pub cmu: ExtractedNoteCommitment,
@@ -144,7 +144,7 @@ pub enum OvkPolicy {
     /// Transaction outputs will be decryptable by the sender, in addition to the
     /// recipients.
     ///
-    /// [`ExtendedFullViewingKey`]: zcash_primitives::zip32::ExtendedFullViewingKey
+    /// [`ExtendedFullViewingKey`]: pivx_primitives::zip32::ExtendedFullViewingKey
     Sender,
 
     /// Use a custom outgoing viewing key. This might for instance be derived from a

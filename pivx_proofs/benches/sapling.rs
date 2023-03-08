@@ -7,7 +7,7 @@ use criterion::Criterion;
 use group::{ff::Field, Group};
 use rand_core::{RngCore, SeedableRng};
 use rand_xorshift::XorShiftRng;
-use zcash_primitives::sapling::{Diversifier, ProofGenerationKey};
+use pivx_primitives::sapling::{Diversifier, ProofGenerationKey};
 use zcash_proofs::circuit::sapling::{Spend, ValueCommitmentOpening};
 
 #[cfg(unix)]

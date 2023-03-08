@@ -6,7 +6,7 @@ use schemer;
 use schemer_rusqlite::RusqliteMigration;
 use uuid::Uuid;
 
-use zcash_primitives::consensus;
+use pivx_primitives::consensus;
 
 use super::{addresses_table, utxos_table};
 use crate::wallet::init::WalletMigrationError;
@@ -15,8 +15,8 @@ use crate::wallet::init::WalletMigrationError;
 use {
     crate::{error::SqliteClientError, wallet::get_transparent_receivers},
     rusqlite::named_params,
-    zcash_client_backend::encoding::AddressCodec,
-    zcash_primitives::zip32::AccountId,
+    pivx_client_backend::encoding::AddressCodec,
+    pivx_primitives::zip32::AccountId,
 };
 
 /// This migration adds an account identifier column to the UTXOs table.

@@ -5,7 +5,7 @@ use bellman::{
 use bls12_381::Bls12;
 use group::{Curve, GroupEncoding};
 use rand_core::OsRng;
-use zcash_primitives::{
+use pivx_primitives::{
     constants::{SPENDING_KEY_GENERATOR, VALUE_COMMITMENT_RANDOMNESS_GENERATOR},
     merkle_tree::MerklePath,
     sapling::{

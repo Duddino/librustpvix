@@ -4,8 +4,8 @@ use std::collections::{HashMap, HashSet};
 use std::convert::TryFrom;
 
 use subtle::{ConditionallySelectable, ConstantTimeEq, CtOption};
-use zcash_note_encryption::batch;
-use zcash_primitives::{
+use pivx_note_encryption::batch;
+use pivx_primitives::{
     consensus,
     merkle_tree::{CommitmentTree, IncrementalWitness},
     sapling::{
@@ -97,7 +97,7 @@ impl ScanningKey for DiversifiableFullViewingKey {
 /// The [`ScanningKey`] implementation for [`SaplingIvk`]s.
 /// Nullifiers cannot be derived when scanning with these keys.
 ///
-/// [`SaplingIvk`]: zcash_primitives::sapling::SaplingIvk
+/// [`SaplingIvk`]: pivx_primitives::sapling::SaplingIvk
 impl ScanningKey for SaplingIvk {
     type Scope = ();
     type SaplingNk = ();
@@ -126,12 +126,12 @@ impl ScanningKey for SaplingIvk {
 /// [`WalletShieldedOutput`]s, whereas the implementation for [`SaplingIvk`] cannot
 /// do so and will return the unit value in those outputs instead.
 ///
-/// [`ExtendedFullViewingKey`]: zcash_primitives::zip32::ExtendedFullViewingKey
-/// [`SaplingIvk`]: zcash_primitives::sapling::SaplingIvk
+/// [`ExtendedFullViewingKey`]: pivx_primitives::zip32::ExtendedFullViewingKey
+/// [`SaplingIvk`]: pivx_primitives::sapling::SaplingIvk
 /// [`CompactBlock`]: crate::proto::compact_formats::CompactBlock
 /// [`ScanningKey`]: crate::welding_rig::ScanningKey
-/// [`CommitmentTree`]: zcash_primitives::merkle_tree::CommitmentTree
-/// [`IncrementalWitness`]: zcash_primitives::merkle_tree::IncrementalWitness
+/// [`CommitmentTree`]: pivx_primitives::merkle_tree::CommitmentTree
+/// [`IncrementalWitness`]: pivx_primitives::merkle_tree::IncrementalWitness
 /// [`WalletShieldedOutput`]: crate::wallet::WalletShieldedOutput
 /// [`WalletTx`]: crate::wallet::WalletTx
 pub fn scan_block<P: consensus::Parameters + Send + 'static, K: ScanningKey>(
@@ -394,8 +394,8 @@ mod tests {
         GroupEncoding,
     };
     use rand_core::{OsRng, RngCore};
-    use zcash_note_encryption::Domain;
-    use zcash_primitives::{
+    use pivx_note_encryption::Domain;
+    use pivx_primitives::{
         consensus::{BlockHeight, Network},
         constants::SPENDING_KEY_GENERATOR,
         memo::MemoBytes,

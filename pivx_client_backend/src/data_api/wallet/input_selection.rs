@@ -4,7 +4,7 @@ use core::marker::PhantomData;
 use std::collections::BTreeSet;
 use std::fmt;
 
-use zcash_primitives::{
+use pivx_primitives::{
     consensus::{self, BlockHeight},
     legacy::TransparentAddress,
     transaction::{

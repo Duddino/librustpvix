@@ -4,13 +4,13 @@ use rusqlite::Transaction;
 use schemer;
 use schemer_rusqlite::RusqliteMigration;
 use uuid::Uuid;
-use zcash_client_backend::{address::RecipientAddress, keys::UnifiedFullViewingKey};
-use zcash_primitives::{consensus, zip32::AccountId};
+use pivx_client_backend::{address::RecipientAddress, keys::UnifiedFullViewingKey};
+use pivx_primitives::{consensus, zip32::AccountId};
 
 use crate::wallet::{add_account_internal, init::WalletMigrationError};
 
 #[cfg(feature = "transparent-inputs")]
-use zcash_primitives::legacy::keys::IncomingViewingKey;
+use pivx_primitives::legacy::keys::IncomingViewingKey;
 
 use super::ufvk_support;
 

@@ -152,7 +152,7 @@ pub(crate) mod private {
         convert::{TryFrom, TryInto},
         io::Write,
     };
-    use zcash_encoding::CompactSize;
+    use pivx_encoding::CompactSize;
 
     /// A raw address or viewing key.
     pub trait SealedItem: for<'a> TryFrom<(u32, &'a [u8]), Error = ParseError> + Clone {

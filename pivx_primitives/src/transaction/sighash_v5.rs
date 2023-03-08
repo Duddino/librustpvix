@@ -2,7 +2,7 @@ use std::io::Write;
 
 use blake2b_simd::{Hash as Blake2bHash, Params, State};
 use byteorder::{LittleEndian, WriteBytesExt};
-use zcash_encoding::Array;
+use pivx_encoding::Array;
 
 use crate::transaction::{
     components::transparent::{self, TxOut},
@@ -18,7 +18,7 @@ use crate::transaction::{
 };
 
 #[cfg(feature = "zfuture")]
-use zcash_encoding::{CompactSize, Vector};
+use pivx_encoding::{CompactSize, Vector};
 
 #[cfg(feature = "zfuture")]
 use crate::transaction::{components::tze, TzeDigests};

@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use zcash_primitives::{
+use pivx_primitives::{
     consensus::{self, BlockHeight},
     memo::MemoBytes,
     sapling::{
@@ -33,7 +33,7 @@ pub enum TransferType {
 pub struct DecryptedOutput {
     /// The index of the output within [`shielded_outputs`].
     ///
-    /// [`shielded_outputs`]: zcash_primitives::transaction::TransactionData
+    /// [`shielded_outputs`]: pivx_primitives::transaction::TransactionData
     pub index: usize,
     /// The note within the output.
     pub note: Note,
@@ -46,7 +46,7 @@ pub struct DecryptedOutput {
     /// True if this output was recovered using an [`OutgoingViewingKey`], meaning that
     /// this is a logical output of the transaction.
     ///
-    /// [`OutgoingViewingKey`]: zcash_primitives::keys::OutgoingViewingKey
+    /// [`OutgoingViewingKey`]: pivx_primitives::keys::OutgoingViewingKey
     pub transfer_type: TransferType,
 }
 

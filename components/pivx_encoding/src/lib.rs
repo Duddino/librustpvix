@@ -1,6 +1,6 @@
 //! *Zcash binary encodings.*
 //!
-//! `zcash_encoding` is a library that provides common encoding and decoding operations
+//! `pivx_encoding` is a library that provides common encoding and decoding operations
 //! for stable binary encodings used throughout the Zcash ecosystem.
 
 // Catch documentation errors caused by code changes.

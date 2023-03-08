@@ -6,11 +6,11 @@
 //! ```
 //! # #[cfg(feature = "test-dependencies")]
 //! # {
-//! use zcash_primitives::{
+//! use pivx_primitives::{
 //!     consensus::{BlockHeight, Network, Parameters}
 //! };
 //!
-//! use zcash_client_backend::{
+//! use pivx_client_backend::{
 //!     data_api::{
 //!         WalletRead, WalletWrite,
 //!         chain::{
@@ -86,7 +86,7 @@
 
 use std::convert::Infallible;
 
-use zcash_primitives::{
+use pivx_primitives::{
     block::BlockHash,
     consensus::{self, BlockHeight},
     merkle_tree::CommitmentTree,
@@ -374,7 +374,7 @@ where
 #[cfg(feature = "test-dependencies")]
 pub mod testing {
     use std::convert::Infallible;
-    use zcash_primitives::consensus::BlockHeight;
+    use pivx_primitives::consensus::BlockHeight;
 
     use crate::proto::compact_formats::CompactBlock;
 

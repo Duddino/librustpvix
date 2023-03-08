@@ -1,6 +1,6 @@
 use criterion::{criterion_group, criterion_main, Criterion};
 use rand_core::{OsRng, RngCore};
-use zcash_primitives::sapling::pedersen_hash::{pedersen_hash, Personalization};
+use pivx_primitives::sapling::pedersen_hash::{pedersen_hash, Personalization};
 
 #[cfg(unix)]
 use pprof::criterion::{Output, PProfProfiler};

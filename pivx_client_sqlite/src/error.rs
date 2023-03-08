@@ -3,13 +3,13 @@
 use std::error;
 use std::fmt;
 
-use zcash_client_backend::encoding::{Bech32DecodeError, TransparentCodecError};
-use zcash_primitives::{consensus::BlockHeight, zip32::AccountId};
+use pivx_client_backend::encoding::{Bech32DecodeError, TransparentCodecError};
+use pivx_primitives::{consensus::BlockHeight, zip32::AccountId};
 
 use crate::PRUNING_HEIGHT;
 
 #[cfg(feature = "transparent-inputs")]
-use zcash_primitives::legacy::TransparentAddress;
+use pivx_primitives::legacy::TransparentAddress;
 
 /// The primary error type for the SQLite wallet backend.
 #[derive(Debug)]
@@ -48,7 +48,7 @@ pub enum SqliteClientError {
     Io(std::io::Error),
 
     /// A received memo cannot be interpreted as a UTF-8 string.
-    InvalidMemo(zcash_primitives::memo::Error),
+    InvalidMemo(pivx_primitives::memo::Error),
 
     /// A requested rewind would violate invariants of the
     /// storage layer. The payload returned with this error is
@@ -155,8 +155,8 @@ impl From<TransparentCodecError> for SqliteClientError {
     }
 }
 
-impl From<zcash_primitives::memo::Error> for SqliteClientError {
-    fn from(e: zcash_primitives::memo::Error) -> Self {
+impl From<pivx_primitives::memo::Error> for SqliteClientError {
+    fn from(e: pivx_primitives::memo::Error) -> Self {
         SqliteClientError::InvalidMemo(e)
     }
 }

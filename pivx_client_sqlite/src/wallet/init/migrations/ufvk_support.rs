@@ -7,16 +7,16 @@ use schemer_rusqlite::RusqliteMigration;
 use secrecy::{ExposeSecret, SecretVec};
 use uuid::Uuid;
 
-use zcash_client_backend::{
+use pivx_client_backend::{
     address::RecipientAddress, data_api::PoolType, keys::UnifiedSpendingKey,
 };
-use zcash_primitives::{consensus, zip32::AccountId};
+use pivx_primitives::{consensus, zip32::AccountId};
 
 #[cfg(feature = "transparent-inputs")]
-use zcash_primitives::legacy::keys::IncomingViewingKey;
+use pivx_primitives::legacy::keys::IncomingViewingKey;
 
 #[cfg(feature = "transparent-inputs")]
-use zcash_client_backend::encoding::AddressCodec;
+use pivx_client_backend::encoding::AddressCodec;
 
 use crate::wallet::{
     init::{migrations::initial_setup, WalletMigrationError},

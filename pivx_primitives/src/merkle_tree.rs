@@ -9,7 +9,7 @@ use incrementalmerkletree::{
 use std::collections::VecDeque;
 use std::io::{self, Read, Write};
 use std::iter::repeat;
-use zcash_encoding::{Optional, Vector};
+use pivx_encoding::{Optional, Vector};
 
 use crate::sapling::SAPLING_COMMITMENT_TREE_DEPTH;
 
@@ -314,7 +314,7 @@ impl<Node: Hashable> CommitmentTree<Node> {
 /// ```
 /// use ff::{Field, PrimeField};
 /// use rand_core::OsRng;
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     merkle_tree::{CommitmentTree, IncrementalWitness},
 ///     sapling::Node,
 /// };

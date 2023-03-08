@@ -8,8 +8,8 @@ use std::sync::{
 };
 
 use memuse::DynamicUsage;
-use zcash_note_encryption::{batch, BatchDomain, Domain, ShieldedOutput, COMPACT_NOTE_SIZE};
-use zcash_primitives::{block::BlockHash, transaction::TxId};
+use pivx_note_encryption::{batch, BatchDomain, Domain, ShieldedOutput, COMPACT_NOTE_SIZE};
+use pivx_primitives::{block::BlockHash, transaction::TxId};
 
 /// A decrypted note.
 pub(crate) struct DecryptedNote<A, D: Domain> {

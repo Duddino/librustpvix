@@ -24,7 +24,7 @@ use blake2b_simd::{Hash as Blake2bHash, Params as Blake2bParams};
 use ff::PrimeField;
 use group::{Curve, Group, GroupEncoding};
 use subtle::{Choice, ConditionallySelectable, ConstantTimeEq, CtOption};
-use zcash_note_encryption::EphemeralKeyBytes;
+use pivx_note_encryption::EphemeralKeyBytes;
 
 /// Errors that can occur in the decoding of Sapling spending keys.
 pub enum DecodingError {

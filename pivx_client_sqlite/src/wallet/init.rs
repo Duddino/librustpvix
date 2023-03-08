@@ -8,14 +8,14 @@ use schemer_rusqlite::RusqliteAdapter;
 use secrecy::SecretVec;
 use uuid::Uuid;
 
-use zcash_primitives::{
+use pivx_primitives::{
     block::BlockHash,
     consensus::{self, BlockHeight},
     transaction::components::amount::BalanceError,
     zip32::AccountId,
 };
 
-use zcash_client_backend::keys::UnifiedFullViewingKey;
+use pivx_client_backend::keys::UnifiedFullViewingKey;
 
 use crate::{error::SqliteClientError, wallet, WalletDb};
 
@@ -94,7 +94,7 @@ impl std::error::Error for WalletMigrationError {
 /// ```
 /// use secrecy::Secret;
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::consensus::Network;
+/// use pivx_primitives::consensus::Network;
 /// use zcash_client_sqlite::{
 ///     WalletDb,
 ///     wallet::init::init_wallet_db,
@@ -155,7 +155,7 @@ fn init_wallet_db_internal<P: consensus::Parameters + 'static>(
 /// **WARNING** This method should be used with care, and should ordinarily be unnecessary.
 /// Prefer to use [`WalletWrite::create_account`] instead.
 ///
-/// [`WalletWrite::create_account`]: zcash_client_backend::data_api::WalletWrite::create_account
+/// [`WalletWrite::create_account`]: pivx_client_backend::data_api::WalletWrite::create_account
 ///
 /// The [`UnifiedFullViewingKey`]s are stored internally and used by other APIs such as
 /// [`get_address`], [`scan_cached_blocks`], and [`create_spend_to_address`]. Account identifiers
@@ -173,12 +173,12 @@ fn init_wallet_db_internal<P: consensus::Parameters + 'static>(
 /// use secrecy::Secret;
 /// use std::collections::HashMap;
 ///
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     consensus::{Network, Parameters},
 ///     zip32::{AccountId, ExtendedSpendingKey}
 /// };
 ///
-/// use zcash_client_backend::{
+/// use pivx_client_backend::{
 ///     keys::{
 ///         sapling,
 ///         UnifiedFullViewingKey
@@ -205,8 +205,8 @@ fn init_wallet_db_internal<P: consensus::Parameters + 'static>(
 /// ```
 ///
 /// [`get_address`]: crate::wallet::get_address
-/// [`scan_cached_blocks`]: zcash_client_backend::data_api::chain::scan_cached_blocks
-/// [`create_spend_to_address`]: zcash_client_backend::data_api::wallet::create_spend_to_address
+/// [`scan_cached_blocks`]: pivx_client_backend::data_api::chain::scan_cached_blocks
+/// [`create_spend_to_address`]: pivx_client_backend::data_api::wallet::create_spend_to_address
 pub fn init_accounts_table<P: consensus::Parameters>(
     wdb: &WalletDb<P>,
     keys: &HashMap<AccountId, UnifiedFullViewingKey>,
@@ -242,7 +242,7 @@ pub fn init_accounts_table<P: consensus::Parameters>(
 ///
 /// ```
 /// use tempfile::NamedTempFile;
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     block::BlockHash,
 ///     consensus::{BlockHeight, Network},
 /// };
@@ -299,13 +299,13 @@ mod tests {
     use std::collections::HashMap;
     use tempfile::NamedTempFile;
 
-    use zcash_client_backend::{
+    use pivx_client_backend::{
         address::RecipientAddress,
         encoding::{encode_extended_full_viewing_key, encode_payment_address},
         keys::{sapling, UnifiedFullViewingKey, UnifiedSpendingKey},
     };
 
-    use zcash_primitives::{
+    use pivx_primitives::{
         block::BlockHash,
         consensus::{BlockHeight, BranchId, Parameters},
         transaction::{TransactionData, TxVersion},
@@ -327,8 +327,8 @@ mod tests {
             wallet::{self, pool_code, PoolType},
             WalletWrite,
         },
-        zcash_address::test_vectors,
-        zcash_primitives::{
+        pivx_address::test_vectors,
+        pivx_primitives::{
             consensus::Network, legacy::keys as transparent, zip32::DiversifierIndex,
         },
     };

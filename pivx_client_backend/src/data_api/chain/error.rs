@@ -3,7 +3,7 @@
 use std::error;
 use std::fmt::{self, Debug, Display};
 
-use zcash_primitives::{consensus::BlockHeight, sapling, transaction::TxId};
+use pivx_primitives::{consensus::BlockHeight, sapling, transaction::TxId};
 
 /// The underlying cause of a [`ChainError`].
 #[derive(Copy, Clone, Debug)]

@@ -8,7 +8,7 @@ use incrementalmerkletree::{
     Hashable, Position,
 };
 use orchard::tree::MerkleHashOrchard;
-use zcash_encoding::{Optional, Vector};
+use pivx_encoding::{Optional, Vector};
 
 use super::{CommitmentTree, HashSer};
 

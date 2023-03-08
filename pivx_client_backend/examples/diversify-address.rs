@@ -1,6 +1,6 @@
 use gumdrop::Options;
-use zcash_client_backend::encoding::{decode_extended_full_viewing_key, encode_payment_address};
-use zcash_primitives::{
+use pivx_client_backend::encoding::{decode_extended_full_viewing_key, encode_payment_address};
+use pivx_primitives::{
     constants::{mainnet, testnet},
     zip32::{DiversifierIndex, ExtendedFullViewingKey},
 };

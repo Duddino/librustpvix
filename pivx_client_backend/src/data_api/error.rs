@@ -2,7 +2,7 @@
 
 use std::error;
 use std::fmt::{self, Debug, Display};
-use zcash_primitives::{
+use pivx_primitives::{
     transaction::{
         builder,
         components::{
@@ -16,7 +16,7 @@ use zcash_primitives::{
 use crate::data_api::wallet::input_selection::InputSelectorError;
 
 #[cfg(feature = "transparent-inputs")]
-use zcash_primitives::{legacy::TransparentAddress, zip32::DiversifierIndex};
+use pivx_primitives::{legacy::TransparentAddress, zip32::DiversifierIndex};
 
 /// Errors that can occur as a consequence of wallet operations.
 #[derive(Debug)]

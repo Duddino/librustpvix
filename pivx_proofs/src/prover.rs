@@ -3,7 +3,7 @@
 use bellman::groth16::{Parameters, PreparedVerifyingKey};
 use bls12_381::Bls12;
 use std::path::Path;
-use zcash_primitives::{
+use pivx_primitives::{
     merkle_tree::MerklePath,
     sapling::{
         prover::TxProver,

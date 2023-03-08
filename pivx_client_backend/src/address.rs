@@ -2,11 +2,11 @@
 
 use std::convert::TryFrom;
 
-use zcash_address::{
+use pivx_address::{
     unified::{self, Container, Encoding},
     ConversionError, Network, ToAddress, TryFromRawAddress, ZcashAddress,
 };
-use zcash_primitives::{
+use pivx_primitives::{
     consensus,
     legacy::TransparentAddress,
     sapling::PaymentAddress,
@@ -208,7 +208,7 @@ impl TryFromRawAddress for RecipientAddress {
     }
 
     fn try_from_raw_unified(
-        ua: zcash_address::unified::Address,
+        ua: pivx_address::unified::Address,
     ) -> Result<Self, ConversionError<Self::Error>> {
         UnifiedAddress::try_from(ua)
             .map_err(ConversionError::User)
@@ -252,8 +252,8 @@ impl RecipientAddress {
 
 #[cfg(test)]
 mod tests {
-    use zcash_address::test_vectors;
-    use zcash_primitives::consensus::MAIN_NETWORK;
+    use pivx_address::test_vectors;
+    use pivx_primitives::consensus::MAIN_NETWORK;
 
     use super::{RecipientAddress, UnifiedAddress};
     use crate::keys::sapling;

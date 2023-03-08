@@ -3,8 +3,8 @@ use std::iter;
 use criterion::{criterion_group, criterion_main, BenchmarkId, Criterion, Throughput};
 use ff::Field;
 use rand_core::OsRng;
-use zcash_note_encryption::batch;
-use zcash_primitives::{
+use pivx_note_encryption::batch;
+use pivx_primitives::{
     consensus::{NetworkUpgrade::Canopy, Parameters, TEST_NETWORK},
     memo::MemoBytes,
     sapling::{

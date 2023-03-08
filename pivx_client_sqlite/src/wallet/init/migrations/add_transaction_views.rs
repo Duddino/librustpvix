@@ -6,7 +6,7 @@ use schemer::{self};
 use schemer_rusqlite::RusqliteMigration;
 use uuid::Uuid;
 
-use zcash_primitives::{
+use pivx_primitives::{
     consensus::BranchId,
     transaction::{
         components::amount::{Amount, BalanceError},
@@ -282,8 +282,8 @@ mod tests {
     use rusqlite::{self, params};
     use tempfile::NamedTempFile;
 
-    use zcash_client_backend::keys::UnifiedSpendingKey;
-    use zcash_primitives::zip32::AccountId;
+    use pivx_client_backend::keys::UnifiedSpendingKey;
+    use pivx_primitives::zip32::AccountId;
 
     use crate::{
         tests,
@@ -294,8 +294,8 @@ mod tests {
     #[cfg(feature = "transparent-inputs")]
     use {
         crate::wallet::init::migrations::{ufvk_support, utxos_table},
-        zcash_client_backend::encoding::AddressCodec,
-        zcash_primitives::{
+        pivx_client_backend::encoding::AddressCodec,
+        pivx_primitives::{
             consensus::{BlockHeight, BranchId},
             legacy::{keys::IncomingViewingKey, Script},
             transaction::{

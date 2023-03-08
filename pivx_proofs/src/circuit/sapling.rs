@@ -4,9 +4,9 @@ use group::{ff::PrimeField, Curve};
 
 use bellman::{Circuit, ConstraintSystem, SynthesisError};
 
-use zcash_primitives::constants;
+use pivx_primitives::constants;
 
-use zcash_primitives::sapling::{
+use pivx_primitives::sapling::{
     PaymentAddress, ProofGenerationKey, SAPLING_COMMITMENT_TREE_DEPTH,
 };
 
@@ -27,7 +27,7 @@ use bellman::gadgets::Assignment;
 use group::ff::PrimeFieldBits;
 
 #[cfg(test)]
-use zcash_primitives::sapling::value::NoteValue;
+use pivx_primitives::sapling::value::NoteValue;
 
 pub const TREE_DEPTH: usize = SAPLING_COMMITMENT_TREE_DEPTH;
 
@@ -544,7 +544,7 @@ fn test_input_circuit_with_bls12_381() {
     use group::{ff::Field, Group};
     use rand_core::{RngCore, SeedableRng};
     use rand_xorshift::XorShiftRng;
-    use zcash_primitives::sapling::{pedersen_hash, Diversifier, Note, ProofGenerationKey, Rseed};
+    use pivx_primitives::sapling::{pedersen_hash, Diversifier, Note, ProofGenerationKey, Rseed};
 
     let mut rng = XorShiftRng::from_seed([
         0x58, 0x62, 0xbe, 0x3d, 0x76, 0x3d, 0x31, 0x8d, 0x17, 0xdb, 0x37, 0x32, 0x54, 0x06, 0xbc,
@@ -690,7 +690,7 @@ fn test_input_circuit_with_bls12_381_external_test_vectors() {
     use group::{ff::Field, Group};
     use rand_core::{RngCore, SeedableRng};
     use rand_xorshift::XorShiftRng;
-    use zcash_primitives::sapling::{pedersen_hash, Diversifier, Note, ProofGenerationKey, Rseed};
+    use pivx_primitives::sapling::{pedersen_hash, Diversifier, Note, ProofGenerationKey, Rseed};
 
     let mut rng = XorShiftRng::from_seed([
         0x59, 0x62, 0xbe, 0x3d, 0x76, 0x3d, 0x31, 0x8d, 0x17, 0xdb, 0x37, 0x32, 0x54, 0x06, 0xbc,
@@ -870,7 +870,7 @@ fn test_output_circuit_with_bls12_381() {
     use group::{ff::Field, Group};
     use rand_core::{RngCore, SeedableRng};
     use rand_xorshift::XorShiftRng;
-    use zcash_primitives::sapling::{Diversifier, ProofGenerationKey, Rseed};
+    use pivx_primitives::sapling::{Diversifier, ProofGenerationKey, Rseed};
 
     let mut rng = XorShiftRng::from_seed([
         0x58, 0x62, 0xbe, 0x3d, 0x76, 0x3d, 0x31, 0x8d, 0x17, 0xdb, 0x37, 0x32, 0x54, 0x06, 0xbc,

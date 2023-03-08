@@ -5,7 +5,7 @@ use std::collections::HashMap;
 use std::fmt::Debug;
 
 use secrecy::SecretVec;
-use zcash_primitives::{
+use pivx_primitives::{
     block::BlockHash,
     consensus::BlockHeight,
     legacy::TransparentAddress,
@@ -388,7 +388,7 @@ pub mod testing {
     use secrecy::{ExposeSecret, SecretVec};
     use std::collections::HashMap;
 
-    use zcash_primitives::{
+    use pivx_primitives::{
         block::BlockHash,
         consensus::{BlockHeight, Network},
         legacy::TransparentAddress,

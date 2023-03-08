@@ -5,7 +5,7 @@
 //! an amount greater than their value.
 use core::cmp::Ordering;
 
-use zcash_primitives::{
+use pivx_primitives::{
     consensus::{self, BlockHeight},
     transaction::{
         components::{
@@ -220,7 +220,7 @@ impl ChangeStrategy for SingleOutputChangeStrategy {
 #[cfg(test)]
 mod tests {
 
-    use zcash_primitives::{
+    use pivx_primitives::{
         consensus::{Network, NetworkUpgrade, Parameters},
         transaction::{
             components::{amount::Amount, transparent::TxOut},

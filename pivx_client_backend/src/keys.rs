@@ -1,7 +1,7 @@
 //! Helper functions for managing light client key material.
 use orchard;
-use zcash_address::unified::{self, Container, Encoding};
-use zcash_primitives::{
+use pivx_address::unified::{self, Container, Encoding};
+use pivx_primitives::{
     consensus,
     zip32::{AccountId, DiversifierIndex},
 };
@@ -11,7 +11,7 @@ use crate::address::UnifiedAddress;
 #[cfg(feature = "transparent-inputs")]
 use {
     std::convert::TryInto,
-    zcash_primitives::legacy::keys::{self as legacy, IncomingViewingKey},
+    pivx_primitives::legacy::keys::{self as legacy, IncomingViewingKey},
 };
 
 #[cfg(feature = "unstable")]
@@ -19,16 +19,16 @@ use {
     byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt},
     std::convert::TryFrom,
     std::io::{Read, Write},
-    zcash_address::unified::Typecode,
-    zcash_encoding::CompactSize,
-    zcash_primitives::consensus::BranchId,
+    pivx_address::unified::Typecode,
+    pivx_encoding::CompactSize,
+    pivx_primitives::consensus::BranchId,
 };
 
 pub mod sapling {
-    pub use zcash_primitives::zip32::sapling::{
+    pub use pivx_primitives::zip32::sapling::{
         DiversifiableFullViewingKey, ExtendedFullViewingKey, ExtendedSpendingKey,
     };
-    use zcash_primitives::zip32::{AccountId, ChildIndex};
+    use pivx_primitives::zip32::{AccountId, ChildIndex};
 
     /// Derives the ZIP 32 [`ExtendedSpendingKey`] for a given coin type and account from the
     /// given seed.
@@ -40,17 +40,17 @@ pub mod sapling {
     /// # Examples
     ///
     /// ```
-    /// use zcash_primitives::{
+    /// use pivx_primitives::{
     ///     constants::testnet::COIN_TYPE,
     ///     zip32::AccountId,
     /// };
-    /// use zcash_client_backend::{
+    /// use pivx_client_backend::{
     ///     keys::sapling,
     /// };
     ///
     /// let extsk = sapling::spending_key(&[0; 32][..], COIN_TYPE, AccountId::from(0));
     /// ```
-    /// [`ExtendedSpendingKey`]: zcash_primitives::zip32::ExtendedSpendingKey
+    /// [`ExtendedSpendingKey`]: pivx_primitives::zip32::ExtendedSpendingKey
     pub fn spending_key(seed: &[u8], coin_type: u32, account: AccountId) -> ExtendedSpendingKey {
         if seed.len() < 32 {
             panic!("ZIP 32 seeds MUST be at least 32 bytes");
@@ -565,7 +565,7 @@ pub mod testing {
     use proptest::prelude::*;
 
     use super::UnifiedSpendingKey;
-    use zcash_primitives::{consensus::Network, zip32::AccountId};
+    use pivx_primitives::{consensus::Network, zip32::AccountId};
 
     pub fn arb_unified_spending_key(params: Network) -> impl Strategy<Value = UnifiedSpendingKey> {
         prop::array::uniform32(prop::num::u8::ANY).prop_flat_map(move |seed| {
@@ -584,13 +584,13 @@ mod tests {
     use proptest::prelude::proptest;
 
     use super::{sapling, UnifiedFullViewingKey};
-    use zcash_primitives::{consensus::MAIN_NETWORK, zip32::AccountId};
+    use pivx_primitives::{consensus::MAIN_NETWORK, zip32::AccountId};
 
     #[cfg(feature = "transparent-inputs")]
     use {
         crate::{address::RecipientAddress, encoding::AddressCodec},
-        zcash_address::test_vectors,
-        zcash_primitives::{
+        pivx_address::test_vectors,
+        pivx_primitives::{
             legacy::{
                 self,
                 keys::{AccountPrivKey, IncomingViewingKey},
@@ -603,7 +603,7 @@ mod tests {
     use {
         super::{testing::arb_unified_spending_key, Era, UnifiedSpendingKey},
         subtle::ConstantTimeEq,
-        zcash_primitives::consensus::Network,
+        pivx_primitives::consensus::Network,
     };
 
     #[cfg(feature = "transparent-inputs")]

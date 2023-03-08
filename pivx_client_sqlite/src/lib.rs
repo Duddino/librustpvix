@@ -1,8 +1,8 @@
 //! *An SQLite-based Zcash light client.*
 //!
 //! `zcash_client_sqlite` contains complete SQLite-based implementations of the [`WalletRead`],
-//! [`WalletWrite`], and [`BlockSource`] traits from the [`zcash_client_backend`] crate. In
-//! combination with [`zcash_client_backend`], it provides a full implementation of a SQLite-backed
+//! [`WalletWrite`], and [`BlockSource`] traits from the [`pivx_client_backend`] crate. In
+//! combination with [`pivx_client_backend`], it provides a full implementation of a SQLite-backed
 //! client for the Zcash network.
 //!
 //! # Design
@@ -23,10 +23,10 @@
 //! The `mainnet` feature configures the light client for use with the Zcash mainnet. By
 //! default, the light client is configured for use with the Zcash testnet.
 //!
-//! [`WalletRead`]: zcash_client_backend::data_api::WalletRead
-//! [`WalletWrite`]: zcash_client_backend::data_api::WalletWrite
-//! [`BlockSource`]: zcash_client_backend::data_api::chain::BlockSource
-//! [`CompactBlock`]: zcash_client_backend::proto::compact_formats::CompactBlock
+//! [`WalletRead`]: pivx_client_backend::data_api::WalletRead
+//! [`WalletWrite`]: pivx_client_backend::data_api::WalletWrite
+//! [`BlockSource`]: pivx_client_backend::data_api::chain::BlockSource
+//! [`CompactBlock`]: pivx_client_backend::proto::compact_formats::CompactBlock
 //! [`init_cache_database`]: crate::chain::init::init_cache_database
 
 // Catch documentation errors caused by code changes.
@@ -38,7 +38,7 @@ use std::collections::HashMap;
 use std::fmt;
 use std::path::Path;
 
-use zcash_primitives::{
+use pivx_primitives::{
     block::BlockHash,
     consensus::{self, BlockHeight},
     legacy::TransparentAddress,
@@ -52,7 +52,7 @@ use zcash_primitives::{
     zip32::{AccountId, DiversifierIndex, ExtendedFullViewingKey},
 };
 
-use zcash_client_backend::{
+use pivx_client_backend::{
     address::{AddressMetadata, UnifiedAddress},
     data_api::{
         self, chain::BlockSource, DecryptedTransaction, PoolType, PrunedBlock, Recipient,
@@ -748,7 +748,7 @@ impl BlockSource for BlockDb {
 ///
 /// where `<block_height>` is the decimal value of the height at which the block was mined, and
 /// `<block_hash>` is the hexadecimal representation of the block hash, as produced by the
-/// [`fmt::Display`] implementation for [`zcash_primitives::block::BlockHash`].
+/// [`fmt::Display`] implementation for [`pivx_primitives::block::BlockHash`].
 ///
 /// This block source is intended to be used with the following data flow:
 /// * When the cache is being filled:
@@ -979,10 +979,10 @@ mod tests {
     use std::{fs::File, path::Path};
 
     #[cfg(feature = "transparent-inputs")]
-    use zcash_primitives::{legacy, legacy::keys::IncomingViewingKey};
+    use pivx_primitives::{legacy, legacy::keys::IncomingViewingKey};
 
-    use zcash_note_encryption::Domain;
-    use zcash_primitives::{
+    use pivx_note_encryption::Domain;
+    use pivx_primitives::{
         block::BlockHash,
         consensus::{BlockHeight, Network, NetworkUpgrade, Parameters},
         legacy::TransparentAddress,
@@ -997,7 +997,7 @@ mod tests {
         zip32::{sapling::DiversifiableFullViewingKey, DiversifierIndex},
     };
 
-    use zcash_client_backend::{
+    use pivx_client_backend::{
         data_api::{WalletRead, WalletWrite},
         keys::{sapling, UnifiedFullViewingKey},
         proto::compact_formats::{

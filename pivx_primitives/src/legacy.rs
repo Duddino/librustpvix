@@ -4,7 +4,7 @@ use byteorder::{ReadBytesExt, WriteBytesExt};
 use std::io::{self, Read, Write};
 use std::ops::Shl;
 
-use zcash_encoding::Vector;
+use pivx_encoding::Vector;
 
 #[cfg(feature = "transparent-inputs")]
 pub mod keys;

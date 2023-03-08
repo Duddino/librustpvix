@@ -8,7 +8,7 @@ mod utxos_table;
 
 use schemer_rusqlite::RusqliteMigration;
 use secrecy::SecretVec;
-use zcash_primitives::consensus;
+use pivx_primitives::consensus;
 
 use super::WalletMigrationError;
 

@@ -11,7 +11,7 @@ use nom::{
     character::complete::char, combinator::all_consuming, multi::separated_list0,
     sequence::preceded,
 };
-use zcash_primitives::{
+use pivx_primitives::{
     consensus,
     memo::{self, MemoBytes},
     transaction::components::Amount,
@@ -36,14 +36,14 @@ pub enum Zip321Error {
 
 /// Converts a [`MemoBytes`] value to a ZIP 321 compatible base64-encoded string.
 ///
-/// [`MemoBytes`]: zcash_primitives::memo::MemoBytes
+/// [`MemoBytes`]: pivx_primitives::memo::MemoBytes
 pub fn memo_to_base64(memo: &MemoBytes) -> String {
     base64::encode_config(memo.as_slice(), base64::URL_SAFE_NO_PAD)
 }
 
 /// Parse a [`MemoBytes`] value from a ZIP 321 compatible base64-encoded string.
 ///
-/// [`MemoBytes`]: zcash_primitives::memo::MemoBytes
+/// [`MemoBytes`]: pivx_primitives::memo::MemoBytes
 pub fn memo_from_base64(s: &str) -> Result<MemoBytes, Zip321Error> {
     base64::decode_config(s, base64::URL_SAFE_NO_PAD)
         .map_err(Zip321Error::InvalidBase64)
@@ -285,7 +285,7 @@ impl TransactionRequest {
 mod render {
     use percent_encoding::{utf8_percent_encode, AsciiSet, CONTROLS};
 
-    use zcash_primitives::{
+    use pivx_primitives::{
         consensus, transaction::components::amount::COIN, transaction::components::Amount,
     };
 
@@ -390,7 +390,7 @@ mod parse {
         AsChar, IResult, InputTakeAtPosition,
     };
     use percent_encoding::percent_decode;
-    use zcash_primitives::{
+    use pivx_primitives::{
         consensus, transaction::components::amount::COIN, transaction::components::Amount,
     };
 
@@ -652,7 +652,7 @@ pub mod testing {
     use proptest::option;
     use proptest::prelude::{any, prop_compose, prop_oneof};
     use proptest::strategy::Strategy;
-    use zcash_primitives::{
+    use pivx_primitives::{
         consensus::TEST_NETWORK, legacy::testing::arb_transparent_addr,
         sapling::testing::arb_payment_address,
         transaction::components::amount::testing::arb_nonnegative_amount,
@@ -738,7 +738,7 @@ pub mod testing {
 #[cfg(test)]
 mod tests {
     use std::str::FromStr;
-    use zcash_primitives::{
+    use pivx_primitives::{
         consensus::{Parameters, TEST_NETWORK},
         memo::Memo,
         transaction::components::Amount,
@@ -758,7 +758,7 @@ mod tests {
     use proptest::prelude::{any, proptest};
 
     #[cfg(all(test, feature = "test-dependencies"))]
-    use zcash_primitives::transaction::components::amount::testing::arb_nonnegative_amount;
+    use pivx_primitives::transaction::components::amount::testing::arb_nonnegative_amount;
 
     #[cfg(all(test, feature = "test-dependencies"))]
     use super::{

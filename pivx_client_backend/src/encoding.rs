@@ -1,17 +1,17 @@
 //! Encoding and decoding functions for Zcash key and address structs.
 //!
 //! Human-Readable Prefixes (HRPs) for Bech32 encodings are located in the
-//! [zcash_primitives::constants][constants] module.
+//! [pivx_primitives::constants][constants] module.
 //!
-//! [constants]: zcash_primitives::constants
+//! [constants]: pivx_primitives::constants
 
 use crate::address::UnifiedAddress;
 use bech32::{self, Error, FromBase32, ToBase32, Variant};
 use bs58::{self, decode::Error as Bs58Error};
 use std::fmt;
 use std::io::{self, Write};
-use zcash_address::unified::{self, Encoding};
-use zcash_primitives::{
+use pivx_address::unified::{self, Encoding};
+use pivx_primitives::{
     consensus,
     legacy::TransparentAddress,
     sapling,
@@ -174,11 +174,11 @@ impl<P: consensus::Parameters> AddressCodec<P> for UnifiedAddress {
 /// # Examples
 ///
 /// ```
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     constants::testnet::{COIN_TYPE, HRP_SAPLING_EXTENDED_SPENDING_KEY},
 ///     zip32::AccountId,
 /// };
-/// use zcash_client_backend::{
+/// use pivx_client_backend::{
 ///     encoding::encode_extended_spending_key,
 ///     keys::sapling,
 /// };
@@ -186,14 +186,14 @@ impl<P: consensus::Parameters> AddressCodec<P> for UnifiedAddress {
 /// let extsk = sapling::spending_key(&[0; 32][..], COIN_TYPE, AccountId::from(0));
 /// let encoded = encode_extended_spending_key(HRP_SAPLING_EXTENDED_SPENDING_KEY, &extsk);
 /// ```
-/// [`ExtendedSpendingKey`]: zcash_primitives::zip32::ExtendedSpendingKey
+/// [`ExtendedSpendingKey`]: pivx_primitives::zip32::ExtendedSpendingKey
 pub fn encode_extended_spending_key(hrp: &str, extsk: &ExtendedSpendingKey) -> String {
     bech32_encode(hrp, |w| extsk.write(w))
 }
 
 /// Decodes an [`ExtendedSpendingKey`] from a Bech32-encoded string.
 ///
-/// [`ExtendedSpendingKey`]: zcash_primitives::zip32::ExtendedSpendingKey
+/// [`ExtendedSpendingKey`]: pivx_primitives::zip32::ExtendedSpendingKey
 pub fn decode_extended_spending_key(
     hrp: &str,
     s: &str,
@@ -206,28 +206,28 @@ pub fn decode_extended_spending_key(
 /// # Examples
 ///
 /// ```
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     constants::testnet::{COIN_TYPE, HRP_SAPLING_EXTENDED_FULL_VIEWING_KEY},
 ///     zip32::AccountId,
 /// };
-/// use zcash_client_backend::{
+/// use pivx_client_backend::{
 ///     encoding::encode_extended_full_viewing_key,
 ///     keys::sapling,
 /// };
-/// use zcash_primitives::zip32::ExtendedFullViewingKey;
+/// use pivx_primitives::zip32::ExtendedFullViewingKey;
 ///
 /// let extsk = sapling::spending_key(&[0; 32][..], COIN_TYPE, AccountId::from(0));
 /// let extfvk = extsk.to_extended_full_viewing_key();
 /// let encoded = encode_extended_full_viewing_key(HRP_SAPLING_EXTENDED_FULL_VIEWING_KEY, &extfvk);
 /// ```
-/// [`ExtendedFullViewingKey`]: zcash_primitives::zip32::ExtendedFullViewingKey
+/// [`ExtendedFullViewingKey`]: pivx_primitives::zip32::ExtendedFullViewingKey
 pub fn encode_extended_full_viewing_key(hrp: &str, extfvk: &ExtendedFullViewingKey) -> String {
     bech32_encode(hrp, |w| extfvk.write(w))
 }
 
 /// Decodes an [`ExtendedFullViewingKey`] from a Bech32-encoded string.
 ///
-/// [`ExtendedFullViewingKey`]: zcash_primitives::zip32::ExtendedFullViewingKey
+/// [`ExtendedFullViewingKey`]: pivx_primitives::zip32::ExtendedFullViewingKey
 pub fn decode_extended_full_viewing_key(
     hrp: &str,
     s: &str,
@@ -241,10 +241,10 @@ pub fn decode_extended_full_viewing_key(
 ///
 /// ```
 /// use group::Group;
-/// use zcash_client_backend::{
+/// use pivx_client_backend::{
 ///     encoding::encode_payment_address,
 /// };
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     constants::testnet::HRP_SAPLING_PAYMENT_ADDRESS,
 ///     sapling::{Diversifier, PaymentAddress},
 /// };
@@ -262,7 +262,7 @@ pub fn decode_extended_full_viewing_key(
 ///     "ztestsapling1qqqqqqqqqqqqqqqqqqcguyvaw2vjk4sdyeg0lc970u659lvhqq7t0np6hlup5lusxle75ss7jnk",
 /// );
 /// ```
-/// [`PaymentAddress`]: zcash_primitives::sapling::PaymentAddress
+/// [`PaymentAddress`]: pivx_primitives::sapling::PaymentAddress
 pub fn encode_payment_address(hrp: &str, addr: &sapling::PaymentAddress) -> String {
     bech32_encode(hrp, |w| w.write_all(&addr.to_bytes()))
 }
@@ -271,7 +271,7 @@ pub fn encode_payment_address(hrp: &str, addr: &sapling::PaymentAddress) -> Stri
 /// using the human-readable prefix values defined in the specified
 /// network parameters.
 ///
-/// [`PaymentAddress`]: zcash_primitives::sapling::PaymentAddress
+/// [`PaymentAddress`]: pivx_primitives::sapling::PaymentAddress
 pub fn encode_payment_address_p<P: consensus::Parameters>(
     params: &P,
     addr: &sapling::PaymentAddress,
@@ -285,10 +285,10 @@ pub fn encode_payment_address_p<P: consensus::Parameters>(
 ///
 /// ```
 /// use group::Group;
-/// use zcash_client_backend::{
+/// use pivx_client_backend::{
 ///     encoding::decode_payment_address,
 /// };
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     consensus::{TEST_NETWORK, Parameters},
 ///     sapling::{Diversifier, PaymentAddress},
 /// };
@@ -309,7 +309,7 @@ pub fn encode_payment_address_p<P: consensus::Parameters>(
 ///     Ok(pa),
 /// );
 /// ```
-/// [`PaymentAddress`]: zcash_primitives::sapling::PaymentAddress
+/// [`PaymentAddress`]: pivx_primitives::sapling::PaymentAddress
 pub fn decode_payment_address(
     hrp: &str,
     s: &str,
@@ -330,10 +330,10 @@ pub fn decode_payment_address(
 /// # Examples
 ///
 /// ```
-/// use zcash_client_backend::{
+/// use pivx_client_backend::{
 ///     encoding::encode_transparent_address,
 /// };
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     consensus::{TEST_NETWORK, Parameters},
 ///     legacy::TransparentAddress,
 /// };
@@ -356,7 +356,7 @@ pub fn decode_payment_address(
 ///     "t26YoyZ1iPgiMEWL4zGUm74eVWfhyDMXzY2",
 /// );
 /// ```
-/// [`TransparentAddress`]: zcash_primitives::legacy::TransparentAddress
+/// [`TransparentAddress`]: pivx_primitives::legacy::TransparentAddress
 pub fn encode_transparent_address(
     pubkey_version: &[u8],
     script_version: &[u8],
@@ -398,13 +398,13 @@ pub fn encode_transparent_address_p<P: consensus::Parameters>(
 /// # Examples
 ///
 /// ```
-/// use zcash_primitives::{
+/// use pivx_primitives::{
 ///     consensus::{TEST_NETWORK, Parameters},
 /// };
-/// use zcash_client_backend::{
+/// use pivx_client_backend::{
 ///     encoding::decode_transparent_address,
 /// };
-/// use zcash_primitives::legacy::TransparentAddress;
+/// use pivx_primitives::legacy::TransparentAddress;
 ///
 /// assert_eq!(
 ///     decode_transparent_address(
@@ -424,7 +424,7 @@ pub fn encode_transparent_address_p<P: consensus::Parameters>(
 ///     Ok(Some(TransparentAddress::Script([0; 20]))),
 /// );
 /// ```
-/// [`TransparentAddress`]: zcash_primitives::legacy::TransparentAddress
+/// [`TransparentAddress`]: pivx_primitives::legacy::TransparentAddress
 pub fn decode_transparent_address(
     pubkey_version: &[u8],
     script_version: &[u8],
@@ -449,7 +449,7 @@ pub fn decode_transparent_address(
 
 #[cfg(test)]
 mod tests {
-    use zcash_primitives::{constants, sapling::PaymentAddress, zip32::ExtendedSpendingKey};
+    use pivx_primitives::{constants, sapling::PaymentAddress, zip32::ExtendedSpendingKey};
 
     use super::{
         decode_extended_full_viewing_key, decode_extended_spending_key, decode_payment_address,

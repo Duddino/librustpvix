@@ -1,6 +1,6 @@
 use std::fmt;
 
-use zcash_primitives::{
+use pivx_primitives::{
     consensus::{self, BlockHeight},
     transaction::{
         components::{
@@ -213,7 +213,7 @@ pub trait ChangeStrategy {
 
 #[cfg(test)]
 pub(crate) mod tests {
-    use zcash_primitives::transaction::components::{
+    use pivx_primitives::transaction::components::{
         amount::Amount,
         sapling::fees as sapling,
         transparent::{fees as transparent, OutPoint, TxOut},
