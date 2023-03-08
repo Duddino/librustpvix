@@ -1,13 +1,13 @@
 [package]
-name = "zcash_primitives"
+name = "pivx_primitives"
 description = "Rust implementations of the Zcash primitives"
 version = "0.10.0"
 authors = [
     "Jack Grigg <jack@z.cash>",
     "Kris Nuttycombe <kris@electriccoin.co>"
 ]
-homepage = "https://github.com/zcash/librustzcash"
-repository = "https://github.com/zcash/librustzcash"
+homepage = "https://github.com/pivx/librustpivx"
+repository = "https://github.com/pivx/librustpivx"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
 edition = "2021"
@@ -19,8 +19,8 @@ all-features = true
 
 [dependencies]
 equihash = { version = "0.2", path = "../components/equihash" }
-zcash_address = { version = "0.2", path = "../components/zcash_address" }
-zcash_encoding = { version = "0.2", path = "../components/zcash_encoding" }
+pivx_address = { version = "0.2", path = "../components/pivx_address" }
+pivx_encoding = { version = "0.2", path = "../components/pivx_encoding" }
 
 # Dependencies exposed in a public API:
 # (Breaking upgrades to these require a breaking upgrade to this crate.)
@@ -79,9 +79,9 @@ ripemd = { version = "0.1", optional = true }
 aes = "0.7"
 fpe = "0.5"
 
-[dependencies.zcash_note_encryption]
+[dependencies.pivx_note_encryption]
 version = "0.2"
-path = "../components/zcash_note_encryption"
+path = "../components/pivx_note_encryption"
 features = ["pre-zip-212"]
 
 [dev-dependencies]

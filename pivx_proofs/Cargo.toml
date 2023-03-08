@@ -1,12 +1,12 @@
 [package]
-name = "zcash_proofs"
+name = "pivx_proofs"
 description = "Zcash zk-SNARK circuits and proving APIs"
 version = "0.10.0"
 authors = [
     "Jack Grigg <jack@z.cash>",
 ]
-homepage = "https://github.com/zcash/librustzcash"
-repository = "https://github.com/zcash/librustzcash"
+homepage = "https://github.com/pivx/librustpivx"
+repository = "https://github.com/pivx/librustpivx"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
 edition = "2021"
@@ -17,7 +17,7 @@ categories = ["cryptography::cryptocurrencies"]
 all-features = true
 
 [dependencies]
-zcash_primitives = { version = "0.10", path = "../zcash_primitives" }
+pivx_primitives = { version = "0.10", path = "../pivx_primitives" }
 
 # Dependencies exposed in a public API:
 # (Breaking upgrades to these require a breaking upgrade to this crate.)

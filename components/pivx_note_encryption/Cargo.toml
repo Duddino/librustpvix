@@ -1,13 +1,13 @@
 [package]
-name = "zcash_note_encryption"
+name = "pivx_note_encryption"
 description = "Note encryption for Zcash transactions"
 version = "0.2.0"
 authors = [
     "Jack Grigg <jack@electriccoin.co>",
     "Kris Nuttycombe <kris@electriccoin.co>"
 ]
-homepage = "https://github.com/zcash/librustzcash"
-repository = "https://github.com/zcash/librustzcash"
+homepage = "https://github.com/pivx/librustpivx"
+repository = "https://github.com/pivx/librustpivx"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
 edition = "2021"

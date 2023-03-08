@@ -2,15 +2,15 @@
 members = [
     "components/equihash",
     "components/f4jumble",
-    "components/zcash_address",
-    "components/zcash_encoding",
-    "components/zcash_note_encryption",
-    "zcash_client_backend",
-    "zcash_client_sqlite",
-    "zcash_extensions",
-    "zcash_history",
-    "zcash_primitives",
-    "zcash_proofs",
+    "components/pivx_address",
+    "components/pivx_encoding",
+    "components/pivx_note_encryption",
+    "pivx_client_backend",
+    "pivx_client_sqlite",
+    "pivx_extensions",
+    "pivx_history",
+    "pivx_primitives",
+    "pivx_proofs",
 ]
 
 [profile.release]
@@ -19,5 +19,5 @@ panic = 'abort'
 codegen-units = 1
 
 [patch.crates-io]
-zcash_encoding = { path = "components/zcash_encoding" }
-zcash_note_encryption = { path = "components/zcash_note_encryption" }
+pivx_encoding = { path = "components/pivx_encoding" }
+pivx_note_encryption = { path = "components/pivx_note_encryption" }

@@ -1,13 +1,13 @@
 [package]
-name = "zcash_client_backend"
+name = "pivx_client_backend"
 description = "APIs for creating shielded Zcash light clients"
 version = "0.7.0"
 authors = [
     "Jack Grigg <jack@z.cash>",
     "Kris Nuttycombe <kris@electriccoin.co>"
 ]
-homepage = "https://github.com/zcash/librustzcash"
-repository = "https://github.com/zcash/librustzcash"
+homepage = "https://github.com/pivx/librustpivx"
+repository = "https://github.com/pivx/librustpivx"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
 edition = "2021"
@@ -17,13 +17,13 @@ rust-version = "1.60"
 exclude = ["*.proto"]
 
 [package.metadata.cargo-udeps.ignore]
-development = ["zcash_proofs"]
+development = ["pivx_proofs"]
 
 [dependencies]
-zcash_address = { version = "0.2", path = "../components/zcash_address" }
-zcash_encoding = { version = "0.2", path = "../components/zcash_encoding" }
-zcash_note_encryption = { version = "0.2", path = "../components/zcash_note_encryption" }
-zcash_primitives = { version = "0.10", path = "../zcash_primitives" }
+pivx_address = { version = "0.2", path = "../components/pivx_address" }
+pivx_encoding = { version = "0.2", path = "../components/pivx_encoding" }
+pivx_note_encryption = { version = "0.2", path = "../components/pivx_note_encryption" }
+pivx_primitives = { version = "0.10", path = "../pivx_primitives" }
 
 # Dependencies exposed in a public API:
 # (Breaking upgrades to these require a breaking upgrade to this crate.)
@@ -84,16 +84,16 @@ proptest = "1.0.0"
 rand_core = "0.6"
 rand_xorshift = "0.3"
 tempfile = "3.1.0"
-zcash_proofs = { version = "0.10", path = "../zcash_proofs" }
-zcash_address = { version = "0.2", path = "../components/zcash_address", features = ["test-dependencies"] }
+pivx_proofs = { version = "0.10", path = "../pivx_proofs" }
+pivx_address = { version = "0.2", path = "../components/pivx_address", features = ["test-dependencies"] }
 
 [features]
 lightwalletd-tonic = ["tonic"]
-transparent-inputs = ["hdwallet", "zcash_primitives/transparent-inputs"]
+transparent-inputs = ["hdwallet", "pivx_primitives/transparent-inputs"]
 test-dependencies = [
     "proptest",
     "orchard/test-dependencies",
-    "zcash_primitives/test-dependencies",
+    "pivx_primitives/test-dependencies",
 ]
 unstable = ["byteorder"]
 

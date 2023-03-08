@@ -1,21 +1,21 @@
 [package]
-name = "zcash_client_sqlite"
+name = "pivx_client_sqlite"
 description = "An SQLite-based Zcash light client"
 version = "0.5.0"
 authors = [
     "Jack Grigg <jack@z.cash>",
     "Kris Nuttycombe <kris@electriccoin.co>"
 ]
-homepage = "https://github.com/zcash/librustzcash"
-repository = "https://github.com/zcash/librustzcash"
+homepage = "https://github.com/pivx/librustpivx"
+repository = "https://github.com/pivx/librustpivx"
 readme = "README.md"
 license = "MIT OR Apache-2.0"
 edition = "2021"
 rust-version = "1.60"
 
 [dependencies]
-zcash_client_backend = { version = "0.7", path = "../zcash_client_backend" }
-zcash_primitives = { version = "0.10", path = "../zcash_primitives" }
+pivx_client_backend = { version = "0.7", path = "../pivx_client_backend" }
+pivx_primitives = { version = "0.10", path = "../pivx_primitives" }
 
 # Dependencies exposed in a public API:
 # (Breaking upgrades to these require a breaking upgrade to this crate.)
@@ -50,19 +50,19 @@ proptest = "1.0.0"
 rand_core = "0.6"
 regex = "1.4"
 tempfile = "3"
-zcash_note_encryption = { version = "0.2", path = "../components/zcash_note_encryption" }
-zcash_proofs = { version = "0.10", path = "../zcash_proofs" }
-zcash_primitives = { version = "0.10", path = "../zcash_primitives", features = ["test-dependencies"] }
-zcash_address = { version = "0.2", path = "../components/zcash_address", features = ["test-dependencies"] }
+pivx_note_encryption = { version = "0.2", path = "../components/pivx_note_encryption" }
+pivx_proofs = { version = "0.10", path = "../pivx_proofs" }
+pivx_primitives = { version = "0.10", path = "../pivx_primitives", features = ["test-dependencies"] }
+pivx_address = { version = "0.2", path = "../components/pivx_address", features = ["test-dependencies"] }
 
 [features]
 mainnet = []
 test-dependencies = [
-    "zcash_primitives/test-dependencies",
-    "zcash_client_backend/test-dependencies",
+    "pivx_primitives/test-dependencies",
+    "pivx_client_backend/test-dependencies",
 ]
-transparent-inputs = ["hdwallet", "zcash_client_backend/transparent-inputs"]
-unstable = ["zcash_client_backend/unstable"]
+transparent-inputs = ["hdwallet", "pivx_client_backend/transparent-inputs"]
+unstable = ["pivx_client_backend/unstable"]
 
 [lib]
 bench = false
