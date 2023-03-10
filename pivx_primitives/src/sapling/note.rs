@@ -1,5 +1,11 @@
 use group::{ff::Field, GroupEncoding};
 use rand_core::{CryptoRng, RngCore};
+use serde::ser::{Serialize, Serializer, SerializeStruct};
+use serde::de::{self, Deserializer, MapAccess, SeqAccess, Visitor};
+use serde::{Deserialize};
+use jubjub::Fr;
+use std::fmt;
+use crate::sapling::Rseed::BeforeZip212;
 
 use super::{
     keys::EphemeralSecretKey, value::NoteValue, Nullifier, NullifierDerivingKey, PaymentAddress,
@@ -51,6 +57,148 @@ impl PartialEq for Note {
     fn eq(&self, other: &Self) -> bool {
         // Notes are canonically defined by their commitments.
         self.cmu().eq(&other.cmu())
+    }
+}
+
+impl Serialize for Note {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let mut state = serializer.serialize_struct("Note", 3)?;
+        state.serialize_field(
+            "recipient",
+            &self.recipient.to_bytes().to_vec(),
+        )?;
+        state.serialize_field("value", &self.value.inner())?;
+        if let BeforeZip212(fr) = self.rseed {
+            state.serialize_field("rseed", &fr.to_bytes());
+        }
+        state.end()
+    }
+}
+impl<'de> Deserialize<'de> for Note {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        enum Field {
+            Recipient,
+            Value,
+            Rseed,
+        }
+
+        impl<'de> Deserialize<'de> for Field {
+            fn deserialize<D>(deserializer: D) -> Result<Field, D::Error>
+            where
+                D: Deserializer<'de>,
+            {
+                struct FieldVisitor;
+
+                impl<'de> Visitor<'de> for FieldVisitor {
+                    type Value = Field;
+
+                    fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                        formatter.write_str("`recipient` or `value` or `rseed`")
+                    }
+
+                    fn visit_str<E>(self, value: &str) -> Result<Field, E>
+                    where
+                        E: de::Error,
+                    {
+                        match value {
+                            "recipient" => Ok(Field::Recipient),
+                            "value" => Ok(Field::Value),
+                            "rseed" => Ok(Field::Rseed),
+                            _ => Err(de::Error::unknown_field(value, FIELDS)),
+                        }
+                    }
+                }
+
+                deserializer.deserialize_identifier(FieldVisitor)
+            }
+        }
+
+        struct DurationVisitor;
+
+        impl<'de> Visitor<'de> for DurationVisitor {
+            type Value = Note;
+
+            fn expecting(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+                formatter.write_str("struct Note")
+            }
+
+            fn visit_seq<V>(self, mut seq: V) -> Result<Note, V::Error>
+            where
+                V: SeqAccess<'de>,
+            {
+                let recipient: Vec<u8> = seq
+                    .next_element()?
+                    .ok_or_else(|| de::Error::invalid_length(0, &self))?;
+                let value = seq
+                    .next_element()?
+                    .ok_or_else(|| de::Error::invalid_length(1, &self))?;
+                let rseed = seq
+                    .next_element()?
+                    .ok_or_else(|| de::Error::invalid_length(2, &self))?;
+                let arr : [u8;43] = recipient.try_into().expect("Cannot convert vec in array");
+
+                let res = Note {
+                    
+                    recipient: PaymentAddress::from_bytes(&arr)
+                        .expect("cannot decode paym"),
+                    value: NoteValue::from_raw(value),
+                    rseed: BeforeZip212(Fr::from_bytes(&rseed).unwrap()),
+                };
+                Ok(res)
+            }
+
+            fn visit_map<V>(self, mut map: V) -> Result<Note, V::Error>
+            where
+                V: MapAccess<'de>,
+            {
+                let mut recipient : Option<Vec<u8>> = None;
+                let mut value = None;
+                let mut rseed = None;
+                while let Some(key) = map.next_key()? {
+                    match key {
+                        Field::Recipient => {
+                            if recipient.is_some() {
+                                return Err(de::Error::duplicate_field("recipient"));
+                            }
+                            recipient = Some(map.next_value()?);
+                        }
+                        Field::Value => {
+                            if value.is_some() {
+                                return Err(de::Error::duplicate_field("value"));
+                            }
+                            value = Some(map.next_value()?);
+                        }
+                        Field::Rseed => {
+                            if rseed.is_some() {
+                                return Err(de::Error::duplicate_field("rseed"));
+                            }
+                            rseed = Some(map.next_value()?);
+                        }
+                    }
+                }
+                
+                let recipient = recipient.ok_or_else(|| de::Error::missing_field("recipient"))?;
+                let arr : [u8;43] = recipient.try_into().expect("Cannot convert vec in array");
+                let value = value.ok_or_else(|| de::Error::missing_field("value"))?;
+                let rseed = rseed.ok_or_else(|| de::Error::missing_field("rseed"))?;
+                let res = Note {
+                    recipient: PaymentAddress::from_bytes(&arr)
+                        .expect("cannot decode adr"),
+                    value: NoteValue::from_raw(value),
+                    rseed: BeforeZip212(Fr::from_bytes(&rseed).unwrap()),
+                };
+                Ok(res)
+            }
+        }
+
+        const FIELDS: &'static [&'static str] = &["recipient", "value", "rseed"];
+        deserializer.deserialize_struct("Note", FIELDS, DurationVisitor)
     }
 }
 

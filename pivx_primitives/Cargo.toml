@@ -18,6 +18,7 @@ categories = ["cryptography::cryptocurrencies"]
 all-features = true
 
 [dependencies]
+serde = { version = "1.0", features = ["derive"] }
 equihash = { version = "0.2", path = "../components/equihash" }
 pivx_address = { version = "0.2", path = "../components/pivx_address" }
 pivx_encoding = { version = "0.2", path = "../components/pivx_encoding" }
