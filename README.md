@@ -1,4 +1,4 @@
-# Zcash Rust crates
+# PIVX Rust crates
 
 This repository contains a (work-in-progress) set of Rust crates for
 working with Zcash.
