@@ -32,9 +32,9 @@ pub const HRP_SAPLING_PAYMENT_ADDRESS: &str = "ps";
 /// The prefix for a Base58Check-encoded mainnet [`TransparentAddress::PublicKey`].
 ///
 /// [`TransparentAddress::PublicKey`]: crate::legacy::TransparentAddress::PublicKey
-pub const B58_PUBKEY_ADDRESS_PREFIX: [u8; 2] = [28, 184];
+pub const B58_PUBKEY_ADDRESS_PREFIX: [u8; 1] = [9];
 
 /// The prefix for a Base58Check-encoded mainnet [`TransparentAddress::Script`].
 ///
 /// [`TransparentAddress::Script`]: crate::legacy::TransparentAddress::Script
-pub const B58_SCRIPT_ADDRESS_PREFIX: [u8; 2] = [28, 189];
+pub const B58_SCRIPT_ADDRESS_PREFIX: [u8; 1] = [9];

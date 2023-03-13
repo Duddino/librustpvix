@@ -11,7 +11,7 @@ pub const COIN_TYPE: u32 = 1;
 ///
 /// [`ExtendedSpendingKey`]: crate::zip32::ExtendedSpendingKey
 /// [ZIP 32]: https://github.com/zcash/zips/blob/master/zip-0032.rst
-pub const HRP_SAPLING_EXTENDED_SPENDING_KEY: &str = "p-secret-extended-key-test";
+pub const HRP_SAPLING_EXTENDED_SPENDING_KEY: &str = "p-secret-spending-key-test";
 
 /// The HRP for a Bech32-encoded testnet [`ExtendedFullViewingKey`].
 ///
@@ -32,9 +32,9 @@ pub const HRP_SAPLING_PAYMENT_ADDRESS: &str = "ptestsapling";
 /// The prefix for a Base58Check-encoded testnet [`TransparentAddress::PublicKey`].
 ///
 /// [`TransparentAddress::PublicKey`]: crate::legacy::TransparentAddress::PublicKey
-pub const B58_PUBKEY_ADDRESS_PREFIX: [u8; 2] = [0x1d, 0x25];
+pub const B58_PUBKEY_ADDRESS_PREFIX: [u8; 1] = [139];
 
 /// The prefix for a Base58Check-encoded testnet [`TransparentAddress::Script`].
 ///
 /// [`TransparentAddress::Script`]: crate::legacy::TransparentAddress::Script
-pub const B58_SCRIPT_ADDRESS_PREFIX: [u8; 2] = [0x1c, 0xba];
+pub const B58_SCRIPT_ADDRESS_PREFIX: [u8; 1] = [19];
