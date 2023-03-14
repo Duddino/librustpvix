@@ -132,7 +132,7 @@ impl TxVersion {
         let overwintered = (header >> 31) == 1;
         let version = header & 0x7FFFFFFF;
 
-        if version == 1 {
+        if version == 1 || version == 2 {
 	    Ok(TxVersion::Sprout(1))
 	} else {
 	    Ok(TxVersion::Sapling)
